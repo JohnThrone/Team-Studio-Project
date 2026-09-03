@@ -15,7 +15,7 @@ public class StatOutcome
 
 // A stat change applied to the AGENT(S) who took part in the roll.
 // statName must exactly match a public int field name on AgentStats
-// (e.g. "Conflict", "Rhetoric", "Guile", or any new field you add later).
+// (e.g. "Conflict", "Rhetoric", "Guile", "SkillPoints", or any new field you add later).
 [System.Serializable]
 public class AgentStatOutcome
 {
@@ -32,7 +32,7 @@ public class MissionTurn
     [Header("Roll (leave 'Requires Roll' off for a no-check turn)")]
     public bool requiresRoll;
 
-    [Tooltip("Must exactly match a public int field name on AgentStats (e.g. Conflict, Rhetoric, Guile). Add new fields to AgentStats and reference them here without touching this script.")]
+    [Tooltip("Must exactly match a public int field name on AgentStats (e.g. Conflict, Rhetoric, Guile).")]
     public string statToTest;
     public int difficultyClass = 10;
 
@@ -54,6 +54,8 @@ public class MissionTurn
 }
 
 // A full mission: name, description, and its own ordered sequence of turns.
+// Each MissionButton holds one of these — missions are no longer a fixed
+// auto-advancing list, they're spawned individually on demand.
 [System.Serializable]
 public class Mission
 {
@@ -68,51 +70,134 @@ public class Mission
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("Missions (activate in list order, one after another)")]
-    public List<Mission> missions = new List<Mission>();
-    private int currentMissionIndex = 0;
-    private int currentTurnIndex = 0;
-
-    [Header("Mission Settings")]
-    public bool haltProgressionOnFailure = false; // if true, stops the whole sequence when a mission fails
+    [Header("Mission Prefab & Spawn Point")]
+    [Tooltip("Prefab with a MissionUIReferences component on its root, showing the active mission's name/description/event text.")]
+    [SerializeField] private GameObject missionUIPrefab;
+    [SerializeField] private Transform missionSpawnPoint;
 
     [Header("Turn Tracking")]
     [SerializeField] private TurnCounter turnCounter; // global counter, never reset
 
-    [Header("UI References")]
-    [SerializeField] private TextMeshProUGUI missionNameText;
-    [SerializeField] private TextMeshProUGUI missionDescriptionText;
-    [SerializeField] private TextMeshProUGUI eventText;
+    [Header("Confirmation Popup (shown before activating a mission)")]
+    [SerializeField] private GameObject confirmationPopup;
+    [SerializeField] private TextMeshProUGUI confirmationText;
+    // Wire the popup's Yes/No buttons in the Inspector to ConfirmYes() / ConfirmNo()
 
-    [Header("Hooks for Other Scripts (PlayerStats, Activity Log, DragIconController)")]
+    [Header("Skill Check Popup (shown after every roll)")]
+    [SerializeField] private GameObject skillCheckPopup;
+    [SerializeField] private TextMeshProUGUI skillCheckStatText;
+    [SerializeField] private TextMeshProUGUI skillCheckRollText;
+    [SerializeField] private TextMeshProUGUI skillCheckResultText;
+    // Wire the popup's Continue button in the Inspector to ContinueAfterSkillCheck()
+
+    [Header("Results Screen (shown when a mission ends)")]
+    [SerializeField] private GameObject resultsScreen;
+    [SerializeField] private TextMeshProUGUI resultsText;
+    // Wire the screen's OK button in the Inspector to CloseResultsScreen()
+
+    [Header("Hooks for Other Scripts (PlayerStats, Activity Log, IconResetManager)")]
     public PlayerStatEvent OnPlayerStatChange;
     public LogEvent OnLogEntry;
     public AgentEvent OnAgentDied;
     public UnityEvent OnMissionComplete;
     public UnityEvent OnMissionFailed;
     public UnityEvent OnMissionEnded; // fires after EITHER success or failure
-    public UnityEvent OnAllMissionsComplete;
 
-    private bool sequenceEnded = false;
+    // --- Runtime state ---
+    private Mission pendingMission;
+    private MissionButton pendingButton;
 
-    private void Start()
+    private Mission currentMission;
+    private MissionButton currentMissionButton; // remembers which button launched the active mission, for lock/unlock rewards
+    private int currentTurnIndex;
+    private GameObject activeMissionInstance;
+    private MissionUIReferences activeMissionUIRefs;
+    private bool isMissionActive = false;
+
+    private MissionTurn pendingTurn;
+    private bool waitingOnSkillCheckPopup = false;
+    private bool pendingRollSuccess;
+    private List<AgentStats> pendingRollAgents;
+
+    // --- MISSION ACTIVATION (called by MissionButton) ---
+
+    public void RequestActivateMission(MissionButton button)
     {
-        if (missions.Count > 0)
+        if (isMissionActive)
         {
-            LoadMission(currentMissionIndex);
+            Log("A mission is already in progress.");
+            return;
+        }
+
+        if (!button.isAvailable)
+        {
+            Log("Mission not available yet.");
+            return;
+        }
+
+        pendingButton = button;
+        pendingMission = button.mission;
+
+        if (confirmationPopup != null)
+        {
+            if (confirmationText != null) confirmationText.text = $"Activate mission: {pendingMission.missionName}?";
+            confirmationPopup.SetActive(true);
+        }
+        else
+        {
+            ConfirmYes();
         }
     }
 
-    // --- MISSION FLOW ---
-
-    private void LoadMission(int index)
+    // Hook to the confirmation popup's "Yes" button
+    public void ConfirmYes()
     {
-        Mission mission = missions[index];
+        if (confirmationPopup != null) confirmationPopup.SetActive(false);
 
-        if (missionNameText != null) missionNameText.text = mission.missionName;
-        if (missionDescriptionText != null) missionDescriptionText.text = mission.missionDescription;
+        List<AgentStats> assignedAgents = GetAvailableAgents();
+        if (assignedAgents.Count == 0)
+        {
+            Log("At least one agent must be assigned before activating a mission.");
+            pendingMission = null;
+            pendingButton = null;
+            return;
+        }
 
+        currentMissionButton = pendingButton; // remember who launched this, for locking/unlocking rewards later
+        SpawnMission(pendingMission);
+        pendingMission = null;
+        pendingButton = null;
+    }
+
+    // Hook to the confirmation popup's "No" button
+    public void ConfirmNo()
+    {
+        if (confirmationPopup != null) confirmationPopup.SetActive(false);
+        pendingMission = null;
+        pendingButton = null;
+    }
+
+    private void SpawnMission(Mission mission)
+    {
+        if (missionUIPrefab == null || missionSpawnPoint == null)
+        {
+            Debug.LogWarning("MissionManager: Mission UI Prefab or Spawn Point not assigned.");
+            return;
+        }
+
+        activeMissionInstance = Instantiate(missionUIPrefab, missionSpawnPoint);
+        activeMissionUIRefs = activeMissionInstance.GetComponent<MissionUIReferences>();
+
+        currentMission = mission;
         currentTurnIndex = 0;
+        isMissionActive = true;
+
+        if (activeMissionUIRefs != null)
+        {
+            if (activeMissionUIRefs.missionNameText != null) activeMissionUIRefs.missionNameText.text = mission.missionName;
+            if (activeMissionUIRefs.missionDescriptionText != null) activeMissionUIRefs.missionDescriptionText.text = mission.missionDescription;
+        }
+
         Log($"Mission started: {mission.missionName}");
 
         if (mission.turns.Count > 0)
@@ -123,34 +208,120 @@ public class MissionManager : MonoBehaviour
 
     private void DisplayTurnIntro()
     {
-        if (sequenceEnded) return;
-        Mission mission = missions[currentMissionIndex];
-        if (currentTurnIndex >= mission.turns.Count) return;
+        if (!isMissionActive || currentTurnIndex >= currentMission.turns.Count) return;
 
-        MissionTurn turn = mission.turns[currentTurnIndex];
-        if (eventText != null) eventText.text = turn.turnDescription;
-        Log(turn.turnDescription);
+        MissionTurn turn = currentMission.turns[currentTurnIndex];
+        SetEventText(turn.turnDescription);
     }
+
+    // --- TURN FLOW ---
 
     // Hook this to your End Turn button
     public void ResolveCurrentTurnAndAdvance()
     {
-        if (sequenceEnded) return;
+        if (!isMissionActive || waitingOnSkillCheckPopup) return;
 
-        Mission mission = missions[currentMissionIndex];
-        if (currentTurnIndex >= mission.turns.Count) return;
+        MissionTurn turn = currentMission.turns[currentTurnIndex];
+        pendingTurn = turn;
 
-        MissionTurn turn = mission.turns[currentTurnIndex];
-        bool missionEndedThisTurn = ResolveTurn(mission, turn);
+        if (!turn.requiresRoll)
+        {
+            FinishTurnResolution(true, new List<AgentStats>(), skipOutcomes: true);
+            return;
+        }
 
-        // Global turn count always advances and never resets, regardless of mission boundaries
+        List<AgentStats> agents = GetAvailableAgents();
+
+        if (agents.Count == 0)
+        {
+            Log("No available agents — cannot attempt this turn.");
+            pendingRollAgents = agents;
+            FinishTurnResolution(false, agents, skipOutcomes: false);
+            return;
+        }
+
+        int combinedStat = agents.Sum(agent => GetAgentStatValue(agent, turn.statToTest));
+        int roll = Random.Range(1, 21); // 1-20 inclusive
+        int total = roll + combinedStat;
+        bool success = total >= turn.difficultyClass;
+
+        string names = string.Join(", ", agents.Select(a => a.AgentName));
+        Log($"Rolled {roll} + combined {turn.statToTest} ({combinedStat} from {names}) = {total} vs DC {turn.difficultyClass} — {(success ? "Success" : "Failure")}.");
+
+        pendingRollAgents = agents;
+        pendingRollSuccess = success;
+        ShowSkillCheckPopup(turn, roll, combinedStat, total, success);
+    }
+
+    private void ShowSkillCheckPopup(MissionTurn turn, int roll, int combinedStat, int total, bool success)
+    {
+        if (skillCheckPopup == null)
+        {
+            // No popup assigned — just proceed immediately
+            FinishTurnResolution(success, pendingRollAgents, skipOutcomes: false);
+            return;
+        }
+
+        waitingOnSkillCheckPopup = true;
+        skillCheckPopup.SetActive(true);
+
+        if (skillCheckStatText != null) skillCheckStatText.text = $"{turn.statToTest} Check (DC {turn.difficultyClass})";
+        if (skillCheckRollText != null) skillCheckRollText.text = $"Roll: {roll} + {combinedStat} = {total}";
+        if (skillCheckResultText != null) skillCheckResultText.text = success ? "Success" : "Failure";
+    }
+
+    // Hook this to the skill check popup's "Continue" button
+    public void ContinueAfterSkillCheck()
+    {
+        if (skillCheckPopup != null) skillCheckPopup.SetActive(false);
+        waitingOnSkillCheckPopup = false;
+        FinishTurnResolution(pendingRollSuccess, pendingRollAgents, skipOutcomes: false);
+    }
+
+    // skipOutcomes is true only for no-roll turns, which just display text and move on
+    private void FinishTurnResolution(bool success, List<AgentStats> agents, bool skipOutcomes)
+    {
+        MissionTurn turn = pendingTurn;
+        bool missionEndedThisTurn = false;
+
+        if (!skipOutcomes)
+        {
+            if (success)
+            {
+                SetEventText(turn.successText);
+                ApplyPlayerOutcomes(turn.successOutcomes);
+                ApplyAgentOutcomes(agents, turn.successAgentOutcomes);
+            }
+            else
+            {
+                SetEventText(turn.failText);
+                ApplyPlayerOutcomes(turn.failureOutcomes);
+                ApplyAgentOutcomes(agents, turn.failureAgentOutcomes);
+
+                if (turn.failureKillsAgent && agents.Count > 0)
+                {
+                    AgentStats victim = agents[Random.Range(0, agents.Count)];
+                    KillAgent(victim);
+                }
+
+                if (turn.endsMissionOnFailure)
+                {
+                    missionEndedThisTurn = true;
+                }
+            }
+        }
+
         if (turnCounter != null) turnCounter.EndTurn();
 
-        if (missionEndedThisTurn) return; // CompleteMission/FailMission already advanced to next mission
+        if (missionEndedThisTurn)
+        {
+            FailMission();
+            return;
+        }
 
         currentTurnIndex++;
 
-        if (currentTurnIndex >= mission.turns.Count)
+        if (currentTurnIndex >= currentMission.turns.Count)
         {
             CompleteMission();
         }
@@ -158,63 +329,6 @@ public class MissionManager : MonoBehaviour
         {
             DisplayTurnIntro();
         }
-    }
-
-    // Returns true if the mission ended (success or failure) as a result of this turn
-    private bool ResolveTurn(Mission mission, MissionTurn turn)
-    {
-        if (!turn.requiresRoll)
-        {
-            return false;
-        }
-
-        List<AgentStats> availableAgents = GetAvailableAgents();
-
-        if (availableAgents.Count == 0)
-        {
-            Log("No available agents — cannot attempt this turn.");
-            SetEventText(turn.failText);
-            ApplyPlayerOutcomes(turn.failureOutcomes);
-
-            if (turn.endsMissionOnFailure)
-            {
-                FailMission();
-                return true;
-            }
-            return false;
-        }
-
-        bool success = RollAgainstCombinedStat(availableAgents, turn.statToTest, turn.difficultyClass);
-
-        if (success)
-        {
-            SetEventText(turn.successText);
-            ApplyPlayerOutcomes(turn.successOutcomes);
-            ApplyAgentOutcomes(availableAgents, turn.successAgentOutcomes);
-        }
-        else
-        {
-            SetEventText(turn.failText);
-            ApplyPlayerOutcomes(turn.failureOutcomes);
-            ApplyAgentOutcomes(availableAgents, turn.failureAgentOutcomes);
-
-            if (turn.failureKillsAgent)
-            {
-                // Stats are pooled, not tied to one "assigned" agent, so this
-                // picks one random available agent to die. Change this pick
-                // logic if you want a different rule (e.g. lowest stat, or all of them).
-                AgentStats victim = availableAgents[Random.Range(0, availableAgents.Count)];
-                KillAgent(victim);
-            }
-
-            if (turn.endsMissionOnFailure)
-            {
-                FailMission();
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // --- AGENT POOLING (automatic, based on scene availability) ---
@@ -226,22 +340,8 @@ public class MissionManager : MonoBehaviour
             .ToList();
     }
 
-    // --- ROLL LOGIC (reflection-based, works with any int field on AgentStats) ---
+    // --- REFLECTION HELPERS (work with any int field on AgentStats) ---
 
-    private bool RollAgainstCombinedStat(List<AgentStats> agents, string statName, int dc)
-    {
-        int combinedStat = agents.Sum(agent => GetAgentStatValue(agent, statName));
-        int roll = Random.Range(1, 21); // 1-20 inclusive
-        int total = roll + combinedStat;
-
-        bool success = total >= dc;
-        string names = string.Join(", ", agents.Select(a => a.AgentName));
-        Log($"Rolled {roll} + combined {statName} ({combinedStat} from {names}) = {total} vs DC {dc} — {(success ? "Success" : "Failure")}.");
-        return success;
-    }
-
-    // Reads any public int field on AgentStats by name, e.g. "Conflict", "Rhetoric", "Guile",
-    // or any new stat field you add later — no changes to this script required.
     private int GetAgentStatValue(AgentStats agent, string statName)
     {
         FieldInfo field = typeof(AgentStats).GetField(statName, BindingFlags.Public | BindingFlags.Instance);
@@ -255,7 +355,6 @@ public class MissionManager : MonoBehaviour
         return (int)field.GetValue(agent);
     }
 
-    // Writes any public int field on AgentStats by name, adding 'amount' to its current value.
     private void ModifyAgentStatValue(AgentStats agent, string statName, int amount)
     {
         FieldInfo field = typeof(AgentStats).GetField(statName, BindingFlags.Public | BindingFlags.Instance);
@@ -281,7 +380,6 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    // Applies each outcome to every agent who took part in the roll, then refreshes their UI text.
     private void ApplyAgentOutcomes(List<AgentStats> agents, List<AgentStatOutcome> outcomes)
     {
         if (outcomes.Count == 0) return;
@@ -292,68 +390,113 @@ public class MissionManager : MonoBehaviour
             {
                 ModifyAgentStatValue(agent, outcome.statName, outcome.amount);
             }
-            agent.UpdateAllText(); // refreshes the agent's own TMP displays immediately
+            agent.UpdateAllText();
             Log($"{agent.AgentName}: " + string.Join(", ", outcomes.Select(o => $"{o.statName} {(o.amount >= 0 ? "+" : "")}{o.amount}")));
         }
     }
 
     private void KillAgent(AgentStats agent)
     {
-        Log($"{agent.AgentName} has died.");
-        agent.IsAvailable = false;
-        agent.UpdateAllText();
-        OnAgentDied?.Invoke(agent);
+        Log($"{agent.AgentName} was struck down!");
+        OnAgentDied?.Invoke(agent); // fire BEFORE Die(), in case Die() destroys the object
+        agent.Die();
     }
+
+    // --- MISSION END ---
 
     private void CompleteMission()
     {
-        Log($"Mission complete: {missions[currentMissionIndex].missionName}");
+        Log($"Mission complete: {currentMission.missionName}");
         OnMissionComplete?.Invoke();
         OnMissionEnded?.Invoke();
-        AdvanceToNextMission();
+        AgentStats.UnassignAllAgents();
+        AgentStats.HealAllUnassignedInjuredAgents();
+        LockCompletedMissionIfNeeded();
+        UnlockRewardMissions();
+        ShowResultsScreen(true);
     }
 
     private void FailMission()
     {
-        Log($"Mission failed: {missions[currentMissionIndex].missionName}");
+        Log($"Mission failed: {currentMission.missionName}");
         OnMissionFailed?.Invoke();
         OnMissionEnded?.Invoke();
-
-        if (haltProgressionOnFailure)
-        {
-            sequenceEnded = true;
-            return;
-        }
-
-        AdvanceToNextMission();
+        AgentStats.UnassignAllAgents();
+        AgentStats.HealAllUnassignedInjuredAgents();
+        ShowResultsScreen(false);
     }
 
-    private void AdvanceToNextMission()
+    // Locks the button that launched this mission back to unavailable, if it's flagged as one-time.
+    // Runs BEFORE UnlockRewardMissions(), so a mission can never accidentally re-unlock itself.
+    private void LockCompletedMissionIfNeeded()
     {
-        currentMissionIndex++;
-
-        if (currentMissionIndex >= missions.Count)
+        if (currentMissionButton != null && currentMissionButton.lockAfterCompletion)
         {
-            sequenceEnded = true;
-            Log("All missions complete.");
-            OnAllMissionsComplete?.Invoke();
+            currentMissionButton.isAvailable = false;
+        }
+    }
+
+    // Unlocks any mission buttons listed on the button that launched the just-completed mission.
+    // Only called on SUCCESS (from CompleteMission), not on failure.
+    private void UnlockRewardMissions()
+    {
+        if (currentMissionButton == null) return;
+
+        foreach (MissionButton button in currentMissionButton.missionsToUnlock)
+        {
+            if (button != null && !button.isAvailable)
+            {
+                button.isAvailable = true;
+                Log($"New mission unlocked: {button.mission.missionName}");
+            }
+        }
+    }
+
+    private void ShowResultsScreen(bool success)
+    {
+        if (resultsScreen == null)
+        {
+            CloseResultsScreen();
             return;
         }
 
-        LoadMission(currentMissionIndex);
+        resultsScreen.SetActive(true);
+        if (resultsText != null)
+        {
+            resultsText.text = success
+                ? $"Mission Success: {currentMission.missionName}"
+                : $"Mission Failed: {currentMission.missionName}";
+        }
+    }
+
+    // Hook this to the results screen's "OK" button
+    public void CloseResultsScreen()
+    {
+        if (resultsScreen != null) resultsScreen.SetActive(false);
+
+        if (activeMissionInstance != null) Destroy(activeMissionInstance);
+        activeMissionInstance = null;
+        activeMissionUIRefs = null;
+        currentMission = null;
+        currentMissionButton = null;
+        isMissionActive = false;
     }
 
     // --- HELPERS ---
 
     private void SetEventText(string text)
     {
-        if (eventText != null) eventText.text = text;
+        if (activeMissionUIRefs != null && activeMissionUIRefs.eventText != null)
+        {
+            activeMissionUIRefs.eventText.text = text;
+        }
         Log(text);
     }
 
-    private void Log(string message)
+    // Public so MissionButton (and anything else) can route messages into the same log.
+    public void Log(string message)
     {
         OnLogEntry?.Invoke(message);
-        Debug.Log(message); // remove once your Activity Log script is in place
+        Debug.Log(message);
     }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 21a60b87b9240074bb598705c46839f5
+guid: 60f141d3c2c1d614a89952c07aef38f9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6557768951301641650
-    second: InactiveDead_0
+      213: 7825342141141310782
+    second: SecrecyBackGround_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: InactiveDead_0
+      name: SecrecyBackGround_0
       rect:
         serializedVersion: 2
-        x: 176
-        y: 28
-        width: 318
-        height: 318
+        x: 43
+        y: 120
+        width: 584
+        height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e4a649222ef1ef4a0800000000000000
-      internalID: -6557768951301641650
+      spriteID: e3d5f988733399c60800000000000000
+      internalID: 7825342141141310782
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      InactiveDead_0: -6557768951301641650
+      SecrecyBackGround_0: 7825342141141310782
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

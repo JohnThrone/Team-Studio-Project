@@ -10,6 +10,11 @@ public class MissionButton : MonoBehaviour
     [Header("Mission Data")]
     public Mission mission;
 
+    [Header("Agent Assignment Limit")]
+    [Range(1, 3)]
+    [Tooltip("Maximum number of agents that can be assigned to this mission. Minimum is always 1 (enforced by MissionManager).")]
+    public int maxAssignedAgents = 3;
+
     [Header("Rewards (unlocked when this mission is completed SUCCESSFULLY)")]
     public List<MissionButton> missionsToUnlock = new List<MissionButton>();
 

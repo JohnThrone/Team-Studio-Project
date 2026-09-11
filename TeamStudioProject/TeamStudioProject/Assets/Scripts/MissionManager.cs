@@ -13,7 +13,7 @@ public class StatOutcome
     public int amount;
 }
 
-// A stat change applied to the AGENT(S) who took part in the roll.
+// A stat change applied to the AGENT(S) assigned to the mission.
 // statName must exactly match a public int field name on AgentStats
 // (e.g. "Conflict", "Rhetoric", "Guile", "SkillPoints", or any new field you add later).
 [System.Serializable]
@@ -23,18 +23,21 @@ public class AgentStatOutcome
     public int amount;
 }
 
-// One beat within a mission
+// One beat within a mission. Every turn (unless Requires Check is off) rolls
+// all three skills — Conflict, Guile, and Rhetoric — against their own target
+// values. The turn succeeds if at least 2 of the 3 checks pass.
 [System.Serializable]
 public class MissionTurn
 {
     [TextArea] public string turnDescription;
 
-    [Header("Roll (leave 'Requires Roll' off for a no-check turn)")]
-    public bool requiresRoll;
+    [Header("Skill Check (leave off for a narrative-only turn with no roll)")]
+    public bool requiresCheck = true;
 
-    [Tooltip("Must exactly match a public int field name on AgentStats (e.g. Conflict, Rhetoric, Guile).")]
-    public string statToTest;
-    public int difficultyClass = 10;
+    [Header("Target Values (assigned agents' combined stat minus this = the roll modifier)")]
+    public int conflictTarget;
+    public int guileTarget;
+    public int rhetoricTarget;
 
     [Header("Result Text")]
     [TextArea] public string successText;
@@ -44,7 +47,7 @@ public class MissionTurn
     public List<StatOutcome> successOutcomes = new List<StatOutcome>();
     public List<StatOutcome> failureOutcomes = new List<StatOutcome>();
 
-    [Header("Agent Stat Effects (applied to every agent who took part in the roll)")]
+    [Header("Agent Stat Effects (applied to every agent assigned to this mission)")]
     public List<AgentStatOutcome> successAgentOutcomes = new List<AgentStatOutcome>();
     public List<AgentStatOutcome> failureAgentOutcomes = new List<AgentStatOutcome>();
 
@@ -54,8 +57,7 @@ public class MissionTurn
 }
 
 // A full mission: name, description, and its own ordered sequence of turns.
-// Each MissionButton holds one of these — missions are no longer a fixed
-// auto-advancing list, they're spawned individually on demand.
+// Each MissionButton holds one of these — missions are spawned individually on demand.
 [System.Serializable]
 public class Mission
 {
@@ -71,29 +73,31 @@ public class Mission
 public class MissionManager : MonoBehaviour
 {
     [Header("Mission Prefab & Spawn Point")]
-    [Tooltip("Prefab with a MissionUIReferences component on its root, showing the active mission's name/description/event text.")]
+    [Tooltip("Prefab with a MissionUIReferences component on its root, showing the mission's name/description/event text AND its own confirmation popup.")]
     [SerializeField] private GameObject missionUIPrefab;
     [SerializeField] private Transform missionSpawnPoint;
 
     [Header("Turn Tracking")]
     [SerializeField] private TurnCounter turnCounter; // global counter, never reset
 
-    [Header("Confirmation Popup (shown before activating a mission)")]
-    [SerializeField] private GameObject confirmationPopup;
-    [SerializeField] private TextMeshProUGUI confirmationText;
-    // Wire the popup's Yes/No buttons in the Inspector to ConfirmYes() / ConfirmNo()
+    [Header("Skill Check Settings")]
+    [Tooltip("A roll (d20 + modifier) equal to or above this succeeds that skill check.")]
+    [SerializeField] private int difficultyThreshold = 10;
 
-    [Header("Skill Check Popup (shown after every roll)")]
+    [Header("Skill Check Popup (shown after every turn's three rolls)")]
     [SerializeField] private GameObject skillCheckPopup;
-    [SerializeField] private TextMeshProUGUI skillCheckStatText;
-    [SerializeField] private TextMeshProUGUI skillCheckRollText;
-    [SerializeField] private TextMeshProUGUI skillCheckResultText;
+    [SerializeField] private TextMeshProUGUI conflictResultText;
+    [SerializeField] private TextMeshProUGUI guileResultText;
+    [SerializeField] private TextMeshProUGUI rhetoricResultText;
     // Wire the popup's Continue button in the Inspector to ContinueAfterSkillCheck()
 
-    [Header("Results Screen (shown when a mission ends)")]
-    [SerializeField] private GameObject resultsScreen;
-    [SerializeField] private TextMeshProUGUI resultsText;
-    // Wire the screen's OK button in the Inspector to CloseResultsScreen()
+    [Header("Sound Effects")]
+    [Tooltip("Add an AudioSource component to this GameObject (or any GameObject) and assign it here.")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip skillCheckSuccessSound;
+    [SerializeField] private AudioClip skillCheckFailureSound;
+    [Tooltip("Plays when a mission panel (with its confirmation popup) spawns.")]
+    [SerializeField] private AudioClip popupAppearSound;
 
     [Header("Hooks for Other Scripts (PlayerStats, Activity Log, IconResetManager)")]
     public PlayerStatEvent OnPlayerStatChange;
@@ -137,47 +141,13 @@ public class MissionManager : MonoBehaviour
 
         pendingButton = button;
         pendingMission = button.mission;
-
-        if (confirmationPopup != null)
-        {
-            if (confirmationText != null) confirmationText.text = $"Activate mission: {pendingMission.missionName}?";
-            confirmationPopup.SetActive(true);
-        }
-        else
-        {
-            ConfirmYes();
-        }
+        SpawnMissionPanel(pendingMission);
     }
 
-    // Hook to the confirmation popup's "Yes" button
-    public void ConfirmYes()
-    {
-        if (confirmationPopup != null) confirmationPopup.SetActive(false);
-
-        List<AgentStats> assignedAgents = GetAvailableAgents();
-        if (assignedAgents.Count == 0)
-        {
-            Log("At least one agent must be assigned before activating a mission.");
-            pendingMission = null;
-            pendingButton = null;
-            return;
-        }
-
-        currentMissionButton = pendingButton; // remember who launched this, for locking/unlocking rewards later
-        SpawnMission(pendingMission);
-        pendingMission = null;
-        pendingButton = null;
-    }
-
-    // Hook to the confirmation popup's "No" button
-    public void ConfirmNo()
-    {
-        if (confirmationPopup != null) confirmationPopup.SetActive(false);
-        pendingMission = null;
-        pendingButton = null;
-    }
-
-    private void SpawnMission(Mission mission)
+    // Spawns the mission prefab immediately, showing its name/description AND its
+    // built-in confirmation popup at the same time. The mission doesn't actually
+    // start (turns, turn counter, etc.) until ConfirmYes() is called.
+    private void SpawnMissionPanel(Mission mission)
     {
         if (missionUIPrefab == null || missionSpawnPoint == null)
         {
@@ -188,22 +158,88 @@ public class MissionManager : MonoBehaviour
         activeMissionInstance = Instantiate(missionUIPrefab, missionSpawnPoint);
         activeMissionUIRefs = activeMissionInstance.GetComponent<MissionUIReferences>();
 
-        currentMission = mission;
+        if (activeMissionUIRefs == null)
+        {
+            Debug.LogWarning("MissionManager: Mission UI Prefab is missing a MissionUIReferences component.");
+            return;
+        }
+
+        if (activeMissionUIRefs.missionNameText != null) activeMissionUIRefs.missionNameText.text = mission.missionName;
+        if (activeMissionUIRefs.missionDescriptionText != null) activeMissionUIRefs.missionDescriptionText.text = mission.missionDescription;
+
+        if (activeMissionUIRefs.confirmationText != null) activeMissionUIRefs.confirmationText.text = $"Activate mission: {mission.missionName}?";
+        if (activeMissionUIRefs.confirmationPopup != null) activeMissionUIRefs.confirmationPopup.SetActive(true);
+
+        // Wire this instance's own Yes/No buttons at runtime, since a freshly
+        // spawned prefab's buttons can't be pre-wired to a specific instance in the Inspector.
+        if (activeMissionUIRefs.confirmYesButton != null)
+        {
+            activeMissionUIRefs.confirmYesButton.onClick.RemoveAllListeners();
+            activeMissionUIRefs.confirmYesButton.onClick.AddListener(ConfirmYes);
+        }
+        if (activeMissionUIRefs.confirmNoButton != null)
+        {
+            activeMissionUIRefs.confirmNoButton.onClick.RemoveAllListeners();
+            activeMissionUIRefs.confirmNoButton.onClick.AddListener(ConfirmNo);
+        }
+
+        PlaySound(popupAppearSound);
+    }
+
+    // Hook — or in this new setup, wired automatically in code — to the confirmation popup's "Yes" button
+    public void ConfirmYes()
+    {
+        List<AgentStats> assignedAgents = GetAvailableAgents();
+
+        if (assignedAgents.Count == 0)
+        {
+            Log("At least one agent must be assigned before activating a mission.");
+            CancelPendingMission();
+            return;
+        }
+
+        if (pendingButton != null && assignedAgents.Count > pendingButton.maxAssignedAgents)
+        {
+            Log($"Too many agents assigned. This mission allows a maximum of {pendingButton.maxAssignedAgents}.");
+            CancelPendingMission();
+            return;
+        }
+
+        if (activeMissionUIRefs != null && activeMissionUIRefs.confirmationPopup != null)
+        {
+            activeMissionUIRefs.confirmationPopup.SetActive(false);
+        }
+
+        currentMission = pendingMission;
+        currentMissionButton = pendingButton;
         currentTurnIndex = 0;
         isMissionActive = true;
 
-        if (activeMissionUIRefs != null)
-        {
-            if (activeMissionUIRefs.missionNameText != null) activeMissionUIRefs.missionNameText.text = mission.missionName;
-            if (activeMissionUIRefs.missionDescriptionText != null) activeMissionUIRefs.missionDescriptionText.text = mission.missionDescription;
-        }
+        pendingMission = null;
+        pendingButton = null;
 
-        Log($"Mission started: {mission.missionName}");
+        Log($"Mission started: {currentMission.missionName}");
 
-        if (mission.turns.Count > 0)
+        if (currentMission.turns.Count > 0)
         {
             DisplayTurnIntro();
         }
+    }
+
+    // Hook — or wired automatically in code — to the confirmation popup's "No" button
+    public void ConfirmNo()
+    {
+        CancelPendingMission();
+    }
+
+    // Destroys the just-spawned (but never activated) mission panel and clears pending state.
+    private void CancelPendingMission()
+    {
+        if (activeMissionInstance != null) Destroy(activeMissionInstance);
+        activeMissionInstance = null;
+        activeMissionUIRefs = null;
+        pendingMission = null;
+        pendingButton = null;
     }
 
     private void DisplayTurnIntro()
@@ -224,7 +260,7 @@ public class MissionManager : MonoBehaviour
         MissionTurn turn = currentMission.turns[currentTurnIndex];
         pendingTurn = turn;
 
-        if (!turn.requiresRoll)
+        if (!turn.requiresCheck)
         {
             FinishTurnResolution(true, new List<AgentStats>(), skipOutcomes: true);
             return;
@@ -240,21 +276,48 @@ public class MissionManager : MonoBehaviour
             return;
         }
 
-        int combinedStat = agents.Sum(agent => GetAgentStatValue(agent, turn.statToTest));
-        int roll = Random.Range(1, 21); // 1-20 inclusive
-        int total = roll + combinedStat;
-        bool success = total >= turn.difficultyClass;
-
-        string names = string.Join(", ", agents.Select(a => a.AgentName));
-        Log($"Rolled {roll} + combined {turn.statToTest} ({combinedStat} from {names}) = {total} vs DC {turn.difficultyClass} — {(success ? "Success" : "Failure")}.");
-
-        pendingRollAgents = agents;
-        pendingRollSuccess = success;
-        ShowSkillCheckPopup(turn, roll, combinedStat, total, success);
+        ResolveThreeSkillCheck(turn, agents);
     }
 
-    private void ShowSkillCheckPopup(MissionTurn turn, int roll, int combinedStat, int total, bool success)
+    // Rolls Conflict, Guile, and Rhetoric separately. The turn succeeds if at least 2 of 3 pass.
+    private void ResolveThreeSkillCheck(MissionTurn turn, List<AgentStats> agents)
     {
+        (bool conflictSuccess, string conflictBreakdown) = RollSkill(agents, "Conflict", turn.conflictTarget);
+        (bool guileSuccess, string guileBreakdown) = RollSkill(agents, "Guile", turn.guileTarget);
+        (bool rhetoricSuccess, string rhetoricBreakdown) = RollSkill(agents, "Rhetoric", turn.rhetoricTarget);
+
+        int successCount = (conflictSuccess ? 1 : 0) + (guileSuccess ? 1 : 0) + (rhetoricSuccess ? 1 : 0);
+        bool overallSuccess = successCount >= 2;
+
+        Log($"Skill checks — Conflict: {(conflictSuccess ? "Success" : "Failure")}, Guile: {(guileSuccess ? "Success" : "Failure")}, Rhetoric: {(rhetoricSuccess ? "Success" : "Failure")} ({successCount}/3 passed). Turn result: {(overallSuccess ? "Success" : "Failure")}.");
+
+        pendingRollAgents = agents;
+        pendingRollSuccess = overallSuccess;
+
+        ShowSkillCheckPopup(overallSuccess, conflictBreakdown, guileBreakdown, rhetoricBreakdown);
+    }
+
+    // Rolls one skill: modifier = assigned agents' combined stat - target value. Roll = d20 + modifier.
+    private (bool success, string breakdown) RollSkill(List<AgentStats> agents, string statName, int targetValue)
+    {
+        int combinedStat = agents.Sum(agent => GetAgentStatValue(agent, statName));
+        int modifier = combinedStat - targetValue;
+        int roll = Random.Range(1, 21); // 1-20 inclusive
+        int total = roll + modifier;
+        bool success = total >= difficultyThreshold;
+
+        string modifierText = modifier >= 0 ? $"+{modifier}" : modifier.ToString();
+        string breakdown = $"{statName}: {roll} {modifierText} = {total} ({(success ? "Success" : "Failure")})";
+
+        Log($"{statName} check — combined {statName} {combinedStat} vs target {targetValue} (modifier {modifierText}). Roll {roll} {modifierText} = {total} vs difficulty {difficultyThreshold} — {(success ? "Success" : "Failure")}.");
+
+        return (success, breakdown);
+    }
+
+    private void ShowSkillCheckPopup(bool success, string conflictBreakdown, string guileBreakdown, string rhetoricBreakdown)
+    {
+        PlaySound(success ? skillCheckSuccessSound : skillCheckFailureSound);
+
         if (skillCheckPopup == null)
         {
             // No popup assigned — just proceed immediately
@@ -265,9 +328,9 @@ public class MissionManager : MonoBehaviour
         waitingOnSkillCheckPopup = true;
         skillCheckPopup.SetActive(true);
 
-        if (skillCheckStatText != null) skillCheckStatText.text = $"{turn.statToTest} Check (DC {turn.difficultyClass})";
-        if (skillCheckRollText != null) skillCheckRollText.text = $"Roll: {roll} + {combinedStat} = {total}";
-        if (skillCheckResultText != null) skillCheckResultText.text = success ? "Success" : "Failure";
+        if (conflictResultText != null) conflictResultText.text = conflictBreakdown;
+        if (guileResultText != null) guileResultText.text = guileBreakdown;
+        if (rhetoricResultText != null) rhetoricResultText.text = rhetoricBreakdown;
     }
 
     // Hook this to the skill check popup's "Continue" button
@@ -278,7 +341,7 @@ public class MissionManager : MonoBehaviour
         FinishTurnResolution(pendingRollSuccess, pendingRollAgents, skipOutcomes: false);
     }
 
-    // skipOutcomes is true only for no-roll turns, which just display text and move on
+    // skipOutcomes is true only for no-check turns, which just display text and move on
     private void FinishTurnResolution(bool success, List<AgentStats> agents, bool skipOutcomes)
     {
         MissionTurn turn = pendingTurn;
@@ -286,28 +349,19 @@ public class MissionManager : MonoBehaviour
 
         if (!skipOutcomes)
         {
-            if (success)
+            SetEventText(success ? turn.successText : turn.failText);
+            ApplyPlayerOutcomes(success ? turn.successOutcomes : turn.failureOutcomes);
+            ApplyAgentOutcomes(agents, success ? turn.successAgentOutcomes : turn.failureAgentOutcomes);
+
+            if (!success && turn.failureKillsAgent && agents.Count > 0)
             {
-                SetEventText(turn.successText);
-                ApplyPlayerOutcomes(turn.successOutcomes);
-                ApplyAgentOutcomes(agents, turn.successAgentOutcomes);
+                AgentStats victim = agents[Random.Range(0, agents.Count)];
+                KillAgent(victim);
             }
-            else
+
+            if (!success && turn.endsMissionOnFailure)
             {
-                SetEventText(turn.failText);
-                ApplyPlayerOutcomes(turn.failureOutcomes);
-                ApplyAgentOutcomes(agents, turn.failureAgentOutcomes);
-
-                if (turn.failureKillsAgent && agents.Count > 0)
-                {
-                    AgentStats victim = agents[Random.Range(0, agents.Count)];
-                    KillAgent(victim);
-                }
-
-                if (turn.endsMissionOnFailure)
-                {
-                    missionEndedThisTurn = true;
-                }
+                missionEndedThisTurn = true;
             }
         }
 
@@ -413,7 +467,7 @@ public class MissionManager : MonoBehaviour
         AgentStats.HealAllUnassignedInjuredAgents();
         LockCompletedMissionIfNeeded();
         UnlockRewardMissions();
-        ShowResultsScreen(true);
+        DespawnMission();
     }
 
     private void FailMission()
@@ -423,7 +477,7 @@ public class MissionManager : MonoBehaviour
         OnMissionEnded?.Invoke();
         AgentStats.UnassignAllAgents();
         AgentStats.HealAllUnassignedInjuredAgents();
-        ShowResultsScreen(false);
+        DespawnMission();
     }
 
     // Locks the button that launched this mission back to unavailable, if it's flagged as one-time.
@@ -452,28 +506,11 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    private void ShowResultsScreen(bool success)
+    // Destroys the active mission's spawned UI and resets state. Called immediately
+    // after CompleteMission()/FailMission() — no separate results screen or button click needed,
+    // since the Skill Check Popup already showed the full breakdown for the deciding turn.
+    private void DespawnMission()
     {
-        if (resultsScreen == null)
-        {
-            CloseResultsScreen();
-            return;
-        }
-
-        resultsScreen.SetActive(true);
-        if (resultsText != null)
-        {
-            resultsText.text = success
-                ? $"Mission Success: {currentMission.missionName}"
-                : $"Mission Failed: {currentMission.missionName}";
-        }
-    }
-
-    // Hook this to the results screen's "OK" button
-    public void CloseResultsScreen()
-    {
-        if (resultsScreen != null) resultsScreen.SetActive(false);
-
         if (activeMissionInstance != null) Destroy(activeMissionInstance);
         activeMissionInstance = null;
         activeMissionUIRefs = null;
@@ -491,6 +528,14 @@ public class MissionManager : MonoBehaviour
             activeMissionUIRefs.eventText.text = text;
         }
         Log(text);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     // Public so MissionButton (and anything else) can route messages into the same log.

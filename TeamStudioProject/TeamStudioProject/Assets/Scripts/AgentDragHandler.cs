@@ -15,6 +15,7 @@ public class AgentDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         if (dragIconController != null)
         {
             dragIconController.Show();
+            dragIconController.PlayPickupSound();
             UpdateDragIconPosition(eventData);
         }
         Cursor.visible = false;

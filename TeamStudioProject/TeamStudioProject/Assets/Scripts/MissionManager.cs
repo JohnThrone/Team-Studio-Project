@@ -223,6 +223,7 @@ public class MissionManager : MonoBehaviour
         if (currentMission.turns.Count > 0)
         {
             DisplayTurnIntro();
+            ResolveCurrentTurnAndAdvance(); // auto-play: no End Turn click needed to attempt this turn
         }
     }
 
@@ -382,6 +383,7 @@ public class MissionManager : MonoBehaviour
         else
         {
             DisplayTurnIntro();
+            ResolveCurrentTurnAndAdvance(); // auto-play: chain straight into the next turn
         }
     }
 
@@ -475,9 +477,21 @@ public class MissionManager : MonoBehaviour
         Log($"Mission failed: {currentMission.missionName}");
         OnMissionFailed?.Invoke();
         OnMissionEnded?.Invoke();
+        AgentStats.HealAllUnassignedInjuredAgents(); // heal anyone already resting from a PREVIOUS mission first
+        InjureAssignedAgentsOnFailure(); // then apply THIS mission's casualties
         AgentStats.UnassignAllAgents();
-        AgentStats.HealAllUnassignedInjuredAgents();
         DespawnMission();
+    }
+
+    // Every agent still assigned to the mission gets injured (or killed, if they were
+    // already injured coming into this mission) when the mission ends in failure.
+    private void InjureAssignedAgentsOnFailure()
+    {
+        List<AgentStats> assignedAgents = GetAvailableAgents();
+        foreach (AgentStats agent in assignedAgents)
+        {
+            agent.Die();
+        }
     }
 
     // Locks the button that launched this mission back to unavailable, if it's flagged as one-time.

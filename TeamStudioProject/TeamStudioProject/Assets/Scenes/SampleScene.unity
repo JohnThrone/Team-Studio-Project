@@ -682,6 +682,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 232227470}
   SkillPoints: 0
   skillPointsText: {fileID: 1780596219}
+  portraitImage: {fileID: 2053474576}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &136079140
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,9 +1722,11 @@ MonoBehaviour:
         amount: 12
       failureOutcomes: []
       successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 1
-      endsMissionOnFailure: 0
+      failureAgentOutcomes:
+      - statName: 
+        amount: 0
+      failureKillsAgent: 0
+      endsMissionOnFailure: 1
   maxAssignedAgents: 1
   missionsToUnlock:
   - {fileID: 582151443}
@@ -2001,6 +2009,10 @@ MonoBehaviour:
   agentStats: {fileID: 1968152157}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 304736503}
+  audioSource: {fileID: 0}
+  pickupSound: {fileID: 0}
+  dropOnZoneSound: {fileID: 0}
+  dropOffZoneSound: {fileID: 0}
 --- !u!114 &304736503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3815,7 +3827,7 @@ GameObject:
   - component: {fileID: 582151444}
   - component: {fileID: 582151443}
   m_Layer: 5
-  m_Name: MissionButton (1)
+  m_Name: AngentDieTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3853,16 +3865,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3185d1c09b621244825ad9d981c680d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
-  isAvailable: 0
+  isAvailable: 1
   mission:
     missionName: Mission1
-    missionDescription: Mission Description
+    missionDescription: Agents Die Test
     turns:
     - turnDescription: turn1
       requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
+      conflictTarget: 100
+      guileTarget: 100
+      rhetoricTarget: 100
       successText: success
       failText: 
       successOutcomes: []
@@ -3870,37 +3882,11 @@ MonoBehaviour:
       successAgentOutcomes: []
       failureAgentOutcomes: []
       failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn2
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: 
-      failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn3
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: 
-      failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
+      endsMissionOnFailure: 1
   maxAssignedAgents: 3
   missionsToUnlock:
   - {fileID: 0}
-  lockAfterCompletion: 1
+  lockAfterCompletion: 0
   missionManager: {fileID: 722015830}
 --- !u!114 &582151444
 MonoBehaviour:
@@ -4010,7 +3996,7 @@ GameObject:
   - component: {fileID: 582175285}
   - component: {fileID: 582175284}
   m_Layer: 5
-  m_Name: MissionButton (3)
+  m_Name: TestVictory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4053,42 +4039,16 @@ MonoBehaviour:
     missionName: Mission1
     missionDescription: Mission Description
     turns:
-    - turnDescription: turn1
+    - turnDescription: 
       requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: success
-      failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn2
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
+      conflictTarget: 1
+      guileTarget: 1
+      rhetoricTarget: 1
       successText: 
-      failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn3
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: success
       failText: 
       successOutcomes:
       - statName: Legitimacy
-        amount: 100
+        amount: 101
       failureOutcomes: []
       successAgentOutcomes: []
       failureAgentOutcomes: []
@@ -4097,7 +4057,7 @@ MonoBehaviour:
   maxAssignedAgents: 3
   missionsToUnlock:
   - {fileID: 0}
-  lockAfterCompletion: 1
+  lockAfterCompletion: 0
   missionManager: {fileID: 722015830}
 --- !u!114 &582175285
 MonoBehaviour:
@@ -5329,7 +5289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Punch a Pleb 2
+  m_text: AgentDieTest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6819,6 +6779,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 2038500971}
   SkillPoints: 0
   skillPointsText: {fileID: 470851046}
+  portraitImage: {fileID: 275857721}
+  normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
+  audioSource: {fileID: 695492983}
+  injuredSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  deathSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
 --- !u!1 &1164417532
 GameObject:
   m_ObjectHideFlags: 0
@@ -8242,6 +8208,11 @@ MonoBehaviour:
   gameOverSecrecyThreshold: 0
   victoryScreen: {fileID: 1164417532}
   deathScreen: {fileID: 437877385}
+  audioSource: {fileID: 695492983}
+  legitimacyIncreaseSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  legitimacyDecreaseSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  secrecyIncreaseSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  secrecyDecreaseSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
 --- !u!4 &1444892125
 Transform:
   m_ObjectHideFlags: 0
@@ -9709,6 +9680,10 @@ MonoBehaviour:
   agentStats: {fileID: 1053672529}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 1780106193}
+  audioSource: {fileID: 695492983}
+  pickupSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  dropOnZoneSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  dropOffZoneSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
 --- !u!114 &1780106193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9910,7 +9885,7 @@ GameObject:
   - component: {fileID: 1806058275}
   - component: {fileID: 1806058274}
   m_Layer: 5
-  m_Name: MissionButton (2)
+  m_Name: TestDefeat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9953,39 +9928,13 @@ MonoBehaviour:
     missionName: Mission1
     missionDescription: Mission Description
     turns:
-    - turnDescription: turn1
+    - turnDescription: 
       requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: success
-      failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn2
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
+      conflictTarget: 100
+      guileTarget: 100
+      rhetoricTarget: 100
       successText: 
       failText: 
-      successOutcomes: []
-      failureOutcomes: []
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 0
-      endsMissionOnFailure: 0
-    - turnDescription: turn3
-      requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 0
-      rhetoricTarget: 0
-      successText: sucess
-      failText: failure
       successOutcomes: []
       failureOutcomes:
       - statName: Secrecy
@@ -9997,7 +9946,7 @@ MonoBehaviour:
   maxAssignedAgents: 3
   missionsToUnlock:
   - {fileID: 0}
-  lockAfterCompletion: 1
+  lockAfterCompletion: 0
   missionManager: {fileID: 722015830}
 --- !u!114 &1806058275
 MonoBehaviour:
@@ -10930,6 +10879,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 785312232}
   SkillPoints: 0
   skillPointsText: {fileID: 908703091}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &1979069606
 GameObject:
   m_ObjectHideFlags: 0
@@ -11416,110 +11371,22 @@ RectTransform:
   m_AnchoredPosition: {x: 99.64935, y: -74.92517}
   m_SizeDelta: {x: 127.3997, y: 47.1962}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2053474572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2053474573}
-  - component: {fileID: 2053474577}
-  - component: {fileID: 2053474576}
-  - component: {fileID: 2053474575}
-  - component: {fileID: 2053474574}
-  m_Layer: 5
-  m_Name: AgentPortrait
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2053474573
+--- !u!224 &2053474573 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+  m_PrefabInstance: {fileID: 1684651737906469012}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053474572}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 87896860}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 285.8997, y: 0.0009765625}
-  m_SizeDelta: {x: 235.2092, y: 312.02}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &2053474574
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053474572}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &2053474575
+--- !u!114 &2053474576 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 319557758218066909, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+  m_PrefabInstance: {fileID: 1684651737906469012}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053474572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa434e074464c04baf42b3f9fbcd143, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClickandDrag
-  agentStats: {fileID: 87896861}
-  dragIconController: {fileID: 2093395205}
-  parentCanvas: {fileID: 626957450}
---- !u!114 &2053474576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053474572}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2053474577
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053474572}
-  m_CullTransparentMesh: 1
 --- !u!1 &2056645801
 GameObject:
   m_ObjectHideFlags: 0
@@ -12085,6 +11952,10 @@ MonoBehaviour:
   agentStats: {fileID: 87896861}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 2093395206}
+  audioSource: {fileID: 0}
+  pickupSound: {fileID: 0}
+  dropOnZoneSound: {fileID: 0}
+  dropOffZoneSound: {fileID: 0}
 --- !u!114 &2093395206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12472,6 +12343,115 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126296633}
   m_CullTransparentMesh: 1
+--- !u!1001 &1684651737906469012
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 87896860}
+    m_Modifications:
+    - target: {fileID: 1209296824088379396, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_Name
+      value: AgentPortrait
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844146449378929316, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: agentStats
+      value: 
+      objectReference: {fileID: 87896861}
+    - target: {fileID: 4844146449378929316, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: parentCanvas
+      value: 
+      objectReference: {fileID: 626957450}
+    - target: {fileID: 4844146449378929316, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: dragIconController
+      value: 
+      objectReference: {fileID: 2093395205}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 235.2092
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 312.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 285.8997
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0009765625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402493269737028963, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb543652154a5904bb6209da2e52ebbe, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

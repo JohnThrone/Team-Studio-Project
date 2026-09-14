@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class AgentStats : MonoBehaviour
@@ -32,10 +33,33 @@ public class AgentStats : MonoBehaviour
     public int SkillPoints = 0;
     [SerializeField] private TextMeshProUGUI skillPointsText;
 
+    [Header("Portrait (swaps automatically when injured)")]
+    [SerializeField] private Image portraitImage;
+    [SerializeField] private Sprite normalPortrait;
+    [SerializeField] private Sprite injuredPortrait;
+
+    [Header("Sound Effects")]
+    [Tooltip("Add an AudioSource component to this GameObject and assign it here. Used for the Injured sound; the Death sound plays independently since this GameObject is destroyed.")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip injuredSound;
+    [SerializeField] private AudioClip deathSound;
+
     // Fired only when an agent is actually destroyed (the second time they'd
     // be killed while already injured). Other scripts (e.g. PlayerStats) can
     // subscribe to react to a permanent death without needing a direct reference.
     public static event System.Action<AgentStats> OnAnyAgentPermanentlyDied;
+
+    // Fired for any player-facing message this agent wants shown in the UI
+    // (e.g. the Activity Log), for situations that happen outside of a mission
+    // context (like the roster/upgrade screen) where there's no MissionManager
+    // in the loop to route a message through.
+    public static event System.Action<string> OnAgentLogMessage;
+
+    private static void LogMessage(string message)
+    {
+        OnAgentLogMessage?.Invoke(message);
+        Debug.Log(message);
+    }
 
     private void Start()
     {
@@ -51,6 +75,12 @@ public class AgentStats : MonoBehaviour
         if (isAvailableText != null) isAvailableText.text = IsAvailable ? "Yes" : "No";
         if (isInjuredText != null) isInjuredText.text = isInjured ? "Yes" : "No";
         if (skillPointsText != null) skillPointsText.text = SkillPoints.ToString();
+
+        if (portraitImage != null)
+        {
+            if (isInjured && injuredPortrait != null) portraitImage.sprite = injuredPortrait;
+            else if (normalPortrait != null) portraitImage.sprite = normalPortrait;
+        }
     }
 
     // Call this when the agent is killed on a mission.
@@ -68,7 +98,10 @@ public class AgentStats : MonoBehaviour
         if (isInjured)
         {
             IsAvailable = false;
-            Debug.Log($"{AgentName} has died.");
+            LogMessage($"{AgentName} has died.");
+            // PlayClipAtPoint (not the local AudioSource) so the sound survives past this frame,
+            // since Destroy(gameObject) below would otherwise cut a normal PlayOneShot() short.
+            if (deathSound != null) AudioSource.PlayClipAtPoint(deathSound, transform.position);
             OnAnyAgentPermanentlyDied?.Invoke(this);
             Destroy(gameObject);
         }
@@ -76,8 +109,17 @@ public class AgentStats : MonoBehaviour
         {
             isInjured = true;
             IsAvailable = false;
-            Debug.Log($"{AgentName} was injured and is out of action.");
+            LogMessage($"{AgentName} was injured and is out of action.");
+            PlaySound(injuredSound);
             UpdateAllText();
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 
@@ -113,13 +155,13 @@ public class AgentStats : MonoBehaviour
     {
         if (IsAvailable)
         {
-            Debug.Log($"{AgentName} is currently assigned to a mission and cannot be upgraded.");
+            LogMessage($"{AgentName} is currently assigned to a mission and cannot be upgraded.");
             return;
         }
 
         if (SkillPoints <= 0)
         {
-            Debug.Log($"{AgentName} has no Skill Points to spend.");
+            LogMessage($"{AgentName} has no Skill Points to spend.");
             return;
         }
 

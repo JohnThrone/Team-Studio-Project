@@ -26,6 +26,14 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private GameObject deathScreen;
 
+    [Header("Sound Effects")]
+    [Tooltip("Add an AudioSource component to this GameObject and assign it here.")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip legitimacyIncreaseSound;
+    [SerializeField] private AudioClip legitimacyDecreaseSound;
+    [SerializeField] private AudioClip secrecyIncreaseSound;
+    [SerializeField] private AudioClip secrecyDecreaseSound;
+
     private bool gameEnded = false;
 
     private void Start()
@@ -59,10 +67,12 @@ public class PlayerStats : MonoBehaviour
         if (statName == "Secrecy")
         {
             Secrecy += amount;
+            PlaySound(amount >= 0 ? secrecyIncreaseSound : secrecyDecreaseSound);
         }
         else if (statName == "Legitimacy")
         {
             Legitimacy += amount;
+            PlaySound(amount >= 0 ? legitimacyIncreaseSound : legitimacyDecreaseSound);
         }
         else
         {
@@ -72,6 +82,14 @@ public class PlayerStats : MonoBehaviour
 
         UpdateAllText();
         CheckGameEndConditions();
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     // Called whenever an agent is permanently killed (not just injured).

@@ -1762,9 +1762,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 1
   mission:
-    missionName: Punch a Pleb
-    missionDescription: A pleb seeks to rise above his station. Time to put him back
-      in his place.
+    missionName: Forge the will
+    missionDescription: "Gaeso Seius Cicero has recently taken ill and the specter
+      of death hangs low over him. What the fool lacked in children, he more than
+      made up for in coin, his lonely estate lies empty and ripe for the picking.
+      \r\n\r\n\r\nSend someone <b>subtle</b> to <b>convince</b> old Cicero that his
+      vast resources would put to better use in our hands instead of our enemies
+      coffers; or worse: the state.\r\n"
     turns:
     - turnDescription: The pleb lives in a dirty tenement building. He may be hard
         to find.
@@ -1783,33 +1787,34 @@ MonoBehaviour:
       failureAgentOutcomes: []
       failureKillsAgent: 0
       endsMissionOnFailure: 0
-    - turnDescription: The Pleb puts up a fight!
+    - turnDescription: The pleb lives in a dirty tenement building. He may be hard
+        to find.
       requiresRoll: 1
-      statToTest: Conflict
-      difficultyClass: 15
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
-      successOutcomes:
-      - statName: Legitimacy
-        amount: 12
-      failureOutcomes:
-      - statName: Legitimacy
-        amount: -5
-      successAgentOutcomes: []
-      failureAgentOutcomes: []
-      failureKillsAgent: 1
-      endsMissionOnFailure: 0
-    - turnDescription: Violence does not go unnoticed. A crowd forms and demands
-        an explaination.
-      requiresRoll: 1
-      statToTest: Rhetoric
-      difficultyClass: 10
-      successText: Success! The crown is convinced to disperse.
-      failText: Failure! The crowd becomes an angry mob!
+      statToTest: Guile
+      difficultyClass: 5
+      successText: Success! The pleb has been found without raising alarm.
+      failText: Failure, this pleb calls for help!
       successOutcomes: []
       failureOutcomes:
       - statName: Secrecy
-        amount: -10
+        amount: -5
+      successAgentOutcomes:
+      - statName: SkillPoints
+        amount: 1
+      failureAgentOutcomes: []
+      failureKillsAgent: 0
+      endsMissionOnFailure: 0
+    - turnDescription: The pleb lives in a dirty tenement building. He may be hard
+        to find.
+      requiresRoll: 1
+      statToTest: Guile
+      difficultyClass: 5
+      successText: Success! The pleb has been found without raising alarm.
+      failText: Failure, this pleb calls for help!
+      successOutcomes: []
+      failureOutcomes:
+      - statName: Secrecy
+        amount: -5
       successAgentOutcomes:
       - statName: SkillPoints
         amount: 1
@@ -4072,8 +4077,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 0
   mission:
-    missionName: Mission1
-    missionDescription: Mission Description
+    missionName: Broker the blackmail
+    missionDescription: "We\u2019ve been presented with a rare opportunity to remove
+      a rock from our sandal, a rock named Lucius Manlius Calvus. Last seen leaving
+      the home of Vispania II, our agents were able to corral the rumor before it
+      broke. Now\u2019s our chance to convince him to support our bid for duumvir.
+      We\u2019ll need someone charismatic to keep Calvus in our pocket while the
+      knowledge of his affair disappears. "
     turns:
     - turnDescription: turn1
       requiresRoll: 1
@@ -7355,9 +7365,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 1
   mission:
-    missionName: Punch a Pleb
-    missionDescription: A pleb seeks to rise above his station. Time to put him back
-      in his place.
+    missionName: Buy the vote
+    missionDescription: All our hard work has born us this opportunity, we simply
+      need to reach out and seize it. Several town council members find their coffers
+      light. Send an agent to <b>persuade</b> them of our legitimacy and make sure
+      that they are well compensated. Best to use <b>someone who blends into crowds</b>.
     turns:
     - turnDescription: The pleb lives in a dirty tenement building. He may be hard
         to find.
@@ -8349,8 +8361,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 0
   mission:
-    missionName: Mission1
-    missionDescription: Mission Description
+    missionName: Poison the well of gossip
+    missionDescription: "With Calvus under our thumb, there remains one true frontrunner
+      for the title of duumvir: Quintus Fabius Strabo. Luckily for us his son has
+      attracted several scandals in the shadows over the years. This time our agent
+      will fabricate a rumor to ruin his chances at opposing us. It is imperative
+      the source of this rumor stays anonymous, lest it lead back to us and ruin
+      all the work we\u2019ve done."
     turns:
     - turnDescription: turn1
       requiresRoll: 1
@@ -10870,8 +10887,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 0
   mission:
-    missionName: Mission1
-    missionDescription: Mission Description
+    missionName: Silencing the witness
+    missionDescription: "A local prostitute caught sight of one of our agents performing
+      their duties recently. Loose lips are likely to sink our plans before they
+      even leave the harbor. \r\n\r\nSend someone who can frighten her into silence
+      and isn\u2019t afraid to get their hands dirty if she doesn\u2019t scare easily.\r\n"
     turns:
     - turnDescription: turn1
       requiresRoll: 1
@@ -11452,9 +11472,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionButton
   isAvailable: 1
   mission:
-    missionName: Punch a Pleb
-    missionDescription: A pleb seeks to rise above his station. Time to put him back
-      in his place.
+    missionName: 'Break the broker '
+    missionDescription: "A moneylender has called in debts to families we need indebted
+      to us. Men in his position usually respond best to the more\u2026 physical
+      elements of discourse, perhaps we send someone who speaks his language."
     turns:
     - turnDescription: The pleb lives in a dirty tenement building. He may be hard
         to find.

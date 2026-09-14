@@ -894,6 +894,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 232227470}
   SkillPoints: 0
   skillPointsText: {fileID: 1780596219}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &96719551
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,6 +971,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 835396465}
   SkillPoints: 0
   skillPointsText: {fileID: 2105271451}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &105943588
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,7 +2297,7 @@ GameObject:
   - component: {fileID: 256018447}
   - component: {fileID: 256018446}
   m_Layer: 5
-  m_Name: PunchAPleb
+  m_Name: Punch a Pleb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2326,8 +2338,7 @@ MonoBehaviour:
   isAvailable: 1
   mission:
     missionName: Punch a Pleb
-    missionDescription: A pleb seeks to rise above his station. Time to put him back
-      in his place.
+    missionDescription: Lorem Ipsum
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
@@ -2346,7 +2357,8 @@ MonoBehaviour:
       endsMissionOnFailure: 0
   maxAssignedAgents: 1
   missionsToUnlock:
-  - {fileID: 582151443}
+  - {fileID: 0}
+  - {fileID: 0}
   lockAfterCompletion: 1
   missionManager: {fileID: 722015830}
 --- !u!114 &256018447
@@ -2855,6 +2867,10 @@ MonoBehaviour:
   agentStats: {fileID: 1968152157}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 304736503}
+  audioSource: {fileID: 0}
+  pickupSound: {fileID: 0}
+  dropOnZoneSound: {fileID: 0}
+  dropOffZoneSound: {fileID: 0}
 --- !u!114 &304736503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10825,6 +10841,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 2038500971}
   SkillPoints: 0
   skillPointsText: {fileID: 470851046}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &1158547702
 GameObject:
   m_ObjectHideFlags: 0
@@ -13089,6 +13111,11 @@ MonoBehaviour:
   gameOverSecrecyThreshold: 0
   victoryScreen: {fileID: 1164417532}
   deathScreen: {fileID: 437877385}
+  audioSource: {fileID: 0}
+  legitimacyIncreaseSound: {fileID: 0}
+  legitimacyDecreaseSound: {fileID: 0}
+  secrecyIncreaseSound: {fileID: 0}
+  secrecyDecreaseSound: {fileID: 0}
 --- !u!4 &1444892125
 Transform:
   m_ObjectHideFlags: 0
@@ -15432,6 +15459,10 @@ MonoBehaviour:
   agentStats: {fileID: 1053672529}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 1780106193}
+  audioSource: {fileID: 0}
+  pickupSound: {fileID: 0}
+  dropOnZoneSound: {fileID: 0}
+  dropOffZoneSound: {fileID: 0}
 --- !u!114 &1780106193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17004,6 +17035,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 1421700194}
   SkillPoints: 0
   skillPointsText: {fileID: 2056304210}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &1968152155
 GameObject:
   m_ObjectHideFlags: 0
@@ -17081,6 +17118,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 785312232}
   SkillPoints: 0
   skillPointsText: {fileID: 908703091}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1 &1979069606
 GameObject:
   m_ObjectHideFlags: 0
@@ -17213,7 +17256,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Punch a Pleb 1
+  m_text: Punch a Pleb
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
   m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
@@ -18407,6 +18450,10 @@ MonoBehaviour:
   agentStats: {fileID: 87896861}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 2093395206}
+  audioSource: {fileID: 0}
+  pickupSound: {fileID: 0}
+  dropOnZoneSound: {fileID: 0}
+  dropOffZoneSound: {fileID: 0}
 --- !u!114 &2093395206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19064,6 +19111,12 @@ MonoBehaviour:
   isInjuredText: {fileID: 68599309}
   SkillPoints: 0
   skillPointsText: {fileID: 113194505}
+  portraitImage: {fileID: 0}
+  normalPortrait: {fileID: 0}
+  injuredPortrait: {fileID: 0}
+  audioSource: {fileID: 0}
+  injuredSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

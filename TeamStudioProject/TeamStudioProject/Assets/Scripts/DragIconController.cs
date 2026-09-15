@@ -50,6 +50,10 @@ public class DragIconController : MonoBehaviour, IBeginDragHandler, IDragHandler
         rectTransform.anchoredPosition = anchoredPosition;
     }
 
+    // Public so AgentDropZone can find "which icon belongs to this agent" when
+    // it needs to reset someone already in the zone.
+    public AgentStats GetAgentStats() => agentStats;
+
     public void FinishIncomingDrag(bool droppedOnValidZone)
     {
         if (droppedOnValidZone)

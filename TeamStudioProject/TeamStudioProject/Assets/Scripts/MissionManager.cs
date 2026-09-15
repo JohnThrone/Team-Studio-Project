@@ -57,7 +57,7 @@ public class MissionTurn
 }
 
 // A full mission: name, description, and its own ordered sequence of turns.
-// Each MissionButton holds one of these — missions are spawned individually on demand.
+// Each MissionButton holds one of these.
 [System.Serializable]
 public class Mission
 {
@@ -72,10 +72,9 @@ public class Mission
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("Mission Prefab & Spawn Point")]
-    [Tooltip("Prefab with a MissionUIReferences component on its root, showing the mission's name/description/event text AND its own confirmation popup.")]
-    [SerializeField] private GameObject missionUIPrefab;
-    [SerializeField] private Transform missionSpawnPoint;
+    [Header("Mission Panel (a permanent scene object, hidden by default)")]
+    [Tooltip("The always-in-scene panel with a MissionUIReferences component, showing the mission's name/description/event text AND its own confirmation popup.")]
+    [SerializeField] private MissionUIReferences missionPanel;
 
     [Header("Turn Tracking")]
     [SerializeField] private TurnCounter turnCounter; // global counter, never reset
@@ -96,7 +95,7 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip skillCheckSuccessSound;
     [SerializeField] private AudioClip skillCheckFailureSound;
-    [Tooltip("Plays when a mission panel (with its confirmation popup) spawns.")]
+    [Tooltip("Plays when the Mission Panel's confirmation popup appears.")]
     [SerializeField] private AudioClip popupAppearSound;
 
     [Header("Hooks for Other Scripts (PlayerStats, Activity Log, IconResetManager)")]
@@ -114,8 +113,6 @@ public class MissionManager : MonoBehaviour
     private Mission currentMission;
     private MissionButton currentMissionButton; // remembers which button launched the active mission, for lock/unlock rewards
     private int currentTurnIndex;
-    private GameObject activeMissionInstance;
-    private MissionUIReferences activeMissionUIRefs;
     private bool isMissionActive = false;
 
     private MissionTurn pendingTurn;
@@ -141,52 +138,31 @@ public class MissionManager : MonoBehaviour
 
         pendingButton = button;
         pendingMission = button.mission;
-        SpawnMissionPanel(pendingMission);
+        ShowMissionPanel(pendingMission);
     }
 
-    // Spawns the mission prefab immediately, showing its name/description AND its
-    // built-in confirmation popup at the same time. The mission doesn't actually
-    // start (turns, turn counter, etc.) until ConfirmYes() is called.
-    private void SpawnMissionPanel(Mission mission)
+    // Shows the (already-in-scene) mission panel and its built-in confirmation popup.
+    // The mission doesn't actually start (turns, turn counter, etc.) until ConfirmYes() is called.
+    private void ShowMissionPanel(Mission mission)
     {
-        if (missionUIPrefab == null || missionSpawnPoint == null)
+        if (missionPanel == null)
         {
-            Debug.LogWarning("MissionManager: Mission UI Prefab or Spawn Point not assigned.");
+            Debug.LogWarning("MissionManager: Mission Panel is not assigned.");
             return;
         }
 
-        activeMissionInstance = Instantiate(missionUIPrefab, missionSpawnPoint);
-        activeMissionUIRefs = activeMissionInstance.GetComponent<MissionUIReferences>();
+        missionPanel.gameObject.SetActive(true);
 
-        if (activeMissionUIRefs == null)
-        {
-            Debug.LogWarning("MissionManager: Mission UI Prefab is missing a MissionUIReferences component.");
-            return;
-        }
+        if (missionPanel.missionNameText != null) missionPanel.missionNameText.text = mission.missionName;
+        if (missionPanel.missionDescriptionText != null) missionPanel.missionDescriptionText.text = mission.missionDescription;
 
-        if (activeMissionUIRefs.missionNameText != null) activeMissionUIRefs.missionNameText.text = mission.missionName;
-        if (activeMissionUIRefs.missionDescriptionText != null) activeMissionUIRefs.missionDescriptionText.text = mission.missionDescription;
-
-        if (activeMissionUIRefs.confirmationText != null) activeMissionUIRefs.confirmationText.text = $"Activate mission: {mission.missionName}?";
-        if (activeMissionUIRefs.confirmationPopup != null) activeMissionUIRefs.confirmationPopup.SetActive(true);
-
-        // Wire this instance's own Yes/No buttons at runtime, since a freshly
-        // spawned prefab's buttons can't be pre-wired to a specific instance in the Inspector.
-        if (activeMissionUIRefs.confirmYesButton != null)
-        {
-            activeMissionUIRefs.confirmYesButton.onClick.RemoveAllListeners();
-            activeMissionUIRefs.confirmYesButton.onClick.AddListener(ConfirmYes);
-        }
-        if (activeMissionUIRefs.confirmNoButton != null)
-        {
-            activeMissionUIRefs.confirmNoButton.onClick.RemoveAllListeners();
-            activeMissionUIRefs.confirmNoButton.onClick.AddListener(ConfirmNo);
-        }
+        if (missionPanel.confirmationText != null) missionPanel.confirmationText.text = $"Activate mission: {mission.missionName}?";
+        if (missionPanel.confirmationPopup != null) missionPanel.confirmationPopup.SetActive(true);
 
         PlaySound(popupAppearSound);
     }
 
-    // Hook — or in this new setup, wired automatically in code — to the confirmation popup's "Yes" button
+    // Hook this to the confirmation popup's "Yes" button in the Inspector
     public void ConfirmYes()
     {
         List<AgentStats> assignedAgents = GetAvailableAgents();
@@ -205,9 +181,9 @@ public class MissionManager : MonoBehaviour
             return;
         }
 
-        if (activeMissionUIRefs != null && activeMissionUIRefs.confirmationPopup != null)
+        if (missionPanel != null && missionPanel.confirmationPopup != null)
         {
-            activeMissionUIRefs.confirmationPopup.SetActive(false);
+            missionPanel.confirmationPopup.SetActive(false);
         }
 
         currentMission = pendingMission;
@@ -227,18 +203,16 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    // Hook — or wired automatically in code — to the confirmation popup's "No" button
+    // Hook this to the confirmation popup's "No" button in the Inspector
     public void ConfirmNo()
     {
         CancelPendingMission();
     }
 
-    // Destroys the just-spawned (but never activated) mission panel and clears pending state.
+    // Hides the panel again after a "No" or a failed agent-count check — nothing was ever activated.
     private void CancelPendingMission()
     {
-        if (activeMissionInstance != null) Destroy(activeMissionInstance);
-        activeMissionInstance = null;
-        activeMissionUIRefs = null;
+        if (missionPanel != null) missionPanel.gameObject.SetActive(false);
         pendingMission = null;
         pendingButton = null;
     }
@@ -253,7 +227,7 @@ public class MissionManager : MonoBehaviour
 
     // --- TURN FLOW ---
 
-    // Hook this to your End Turn button
+    // Hook this to your End Turn button, if you still have one
     public void ResolveCurrentTurnAndAdvance()
     {
         if (!isMissionActive || waitingOnSkillCheckPopup) return;
@@ -469,7 +443,7 @@ public class MissionManager : MonoBehaviour
         AgentStats.HealAllUnassignedInjuredAgents();
         LockCompletedMissionIfNeeded();
         UnlockRewardMissions();
-        DespawnMission();
+        HideMissionPanel();
     }
 
     private void FailMission()
@@ -480,7 +454,7 @@ public class MissionManager : MonoBehaviour
         AgentStats.HealAllUnassignedInjuredAgents(); // heal anyone already resting from a PREVIOUS mission first
         InjureAssignedAgentsOnFailure(); // then apply THIS mission's casualties
         AgentStats.UnassignAllAgents();
-        DespawnMission();
+        HideMissionPanel();
     }
 
     // Every agent still assigned to the mission gets injured (or killed, if they were
@@ -520,14 +494,11 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    // Destroys the active mission's spawned UI and resets state. Called immediately
-    // after CompleteMission()/FailMission() — no separate results screen or button click needed,
-    // since the Skill Check Popup already showed the full breakdown for the deciding turn.
-    private void DespawnMission()
+    // Hides the mission panel and resets state. Called immediately after
+    // CompleteMission()/FailMission() — no separate results screen or button click needed.
+    private void HideMissionPanel()
     {
-        if (activeMissionInstance != null) Destroy(activeMissionInstance);
-        activeMissionInstance = null;
-        activeMissionUIRefs = null;
+        if (missionPanel != null) missionPanel.gameObject.SetActive(false);
         currentMission = null;
         currentMissionButton = null;
         isMissionActive = false;
@@ -537,9 +508,9 @@ public class MissionManager : MonoBehaviour
 
     private void SetEventText(string text)
     {
-        if (activeMissionUIRefs != null && activeMissionUIRefs.eventText != null)
+        if (missionPanel != null && missionPanel.eventText != null)
         {
-            activeMissionUIRefs.eventText.text = text;
+            missionPanel.eventText.text = text;
         }
         Log(text);
     }

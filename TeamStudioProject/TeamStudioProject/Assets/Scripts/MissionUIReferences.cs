@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-// Attach to the ROOT of your mission UI prefab. MissionManager grabs this
-// component via GetComponent right after instantiating the prefab, and uses
-// these fields to display the mission AND its confirmation popup — both
-// appear together the moment a mission button is pressed.
+// Attach to the root of your permanent, always-in-scene Mission Panel (starts
+// inactive in the Hierarchy). MissionManager shows/hides it directly — nothing
+// is instantiated or destroyed anymore.
 public class MissionUIReferences : MonoBehaviour
 {
     [Header("Mission Display")]
@@ -13,9 +11,10 @@ public class MissionUIReferences : MonoBehaviour
     public TextMeshProUGUI missionDescriptionText;
     public TextMeshProUGUI eventText;
 
-    [Header("Confirmation Popup (a child object within this same prefab)")]
+    [Header("Confirmation Popup (a child object within this same panel)")]
     public GameObject confirmationPopup;
     public TextMeshProUGUI confirmationText;
-    public Button confirmYesButton;
-    public Button confirmNoButton;
+    // Wire this popup's Yes/No buttons directly in the Inspector to
+    // MissionManager.ConfirmYes() / MissionManager.ConfirmNo() — same pattern
+    // as the Skill Check popup's Continue button.
 }

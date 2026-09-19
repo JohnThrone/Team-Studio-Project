@@ -426,9 +426,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 10
+  Conflict: 8
   conflictText: {fileID: 2108972615}
-  Rhetoric: 5
+  Rhetoric: 3
   rhetoricText: {fileID: 874193915}
   Guile: 4
   guileText: {fileID: 615379292}
@@ -749,11 +749,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 5
+      conflictTarget: 0
       guileTarget: 10
-      rhetoricTarget: 5
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      rhetoricTarget: 6
+      successText: Success!
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -1413,13 +1413,13 @@ MonoBehaviour:
       resources would put to better use in our hands instead of our enemies coffers;
       or worse: the state.\r\n"
     turns:
-    - turnDescription: The Pleb puts up a fight!
+    - turnDescription: 
       requiresCheck: 1
-      conflictTarget: 5
-      guileTarget: 5
-      rhetoricTarget: 5
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      conflictTarget: 2
+      guileTarget: 8
+      rhetoricTarget: 4
+      successText: Success!
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -7574,11 +7574,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 10
-      guileTarget: 5
-      rhetoricTarget: 5
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      conflictTarget: 8
+      guileTarget: 4
+      rhetoricTarget: 3
+      successText: Success!
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -7990,11 +7990,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 10
-      guileTarget: 5
-      rhetoricTarget: 5
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      conflictTarget: 8
+      guileTarget: 2
+      rhetoricTarget: 4
+      successText: 'Success! '
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -10285,11 +10285,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 5
-      guileTarget: 5
-      rhetoricTarget: 10
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      conflictTarget: 2
+      guileTarget: 4
+      rhetoricTarget: 8
+      successText: Success!
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -10893,11 +10893,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 5
-      guileTarget: 10
-      rhetoricTarget: 5
-      successText: Success! You punch the pleb!
-      failText: Failure! The Pleb punches you!
+      conflictTarget: 0
+      guileTarget: 6
+      rhetoricTarget: 9
+      successText: Success!
+      failText: Failure!
       successOutcomes:
       - statName: Legitimacy
         amount: 100
@@ -12712,11 +12712,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 4
+  Conflict: 3
   conflictText: {fileID: 172866045}
-  Rhetoric: 10
+  Rhetoric: 9
   rhetoricText: {fileID: 490281550}
-  Guile: 4
+  Guile: 5
   guileText: {fileID: 1646887086}
   IsAvailable: 0
   isAvailableText: {fileID: 316527008}
@@ -14107,7 +14107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 4
+  Conflict: 2
   conflictText: {fileID: 1471654240}
   Rhetoric: 5
   rhetoricText: {fileID: 677025360}

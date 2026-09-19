@@ -155,6 +155,81 @@ RectTransform:
   m_AnchoredPosition: {x: -4.9999847, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &21895389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21895390}
+  - component: {fileID: 21895392}
+  - component: {fileID: 21895391}
+  m_Layer: 5
+  m_Name: GuileIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &21895390
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21895389}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8322684, y: 0.8322684, z: 0.8322684}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 931708481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -475.93, y: 155}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &21895391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21895389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 2234259172721872998, guid: a9be32cfcc993a64a92ed56e686a9549, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &21895392
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21895389}
+  m_CullTransparentMesh: 1
 --- !u!1 &53108888
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +304,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53108888}
+  m_CullTransparentMesh: 1
+--- !u!1 &61738289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 61738290}
+  - component: {fileID: 61738292}
+  - component: {fileID: 61738291}
+  m_Layer: 5
+  m_Name: RhetoricIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &61738290
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61738289}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8322684, y: 0.8322684, z: 0.8322684}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 931708481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -474.8, y: 57}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &61738291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61738289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -851828956290287050, guid: a9be32cfcc993a64a92ed56e686a9549, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &61738292
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61738289}
   m_CullTransparentMesh: 1
 --- !u!1 &68599307
 GameObject:
@@ -426,9 +576,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 8
+  Conflict: 10
   conflictText: {fileID: 2108972615}
-  Rhetoric: 3
+  Rhetoric: 5
   rhetoricText: {fileID: 874193915}
   Guile: 4
   guileText: {fileID: 615379292}
@@ -441,9 +591,9 @@ MonoBehaviour:
   portraitImage: {fileID: 105943592}
   normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
   injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
-  audioSource: {fileID: 0}
-  injuredSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  injuredSound: {fileID: 8300000, guid: 8f26a6f1a5075e4458c3de7aa29058f8, type: 3}
+  deathSound: {fileID: 8300000, guid: 8f26a6f1a5075e4458c3de7aa29058f8, type: 3}
 --- !u!1 &105943588
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,11 +899,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 0
+      conflictTarget: 5
       guileTarget: 10
-      rhetoricTarget: 6
-      successText: Success!
-      failText: Failure!
+      rhetoricTarget: 5
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -1413,13 +1563,13 @@ MonoBehaviour:
       resources would put to better use in our hands instead of our enemies coffers;
       or worse: the state.\r\n"
     turns:
-    - turnDescription: 
+    - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 2
-      guileTarget: 8
-      rhetoricTarget: 4
-      successText: Success!
-      failText: Failure!
+      conflictTarget: 5
+      guileTarget: 5
+      rhetoricTarget: 5
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -1916,10 +2066,10 @@ MonoBehaviour:
   agentStats: {fileID: 1959874307}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 304736503}
-  audioSource: {fileID: 0}
-  pickupSound: {fileID: 0}
-  dropOnZoneSound: {fileID: 0}
-  dropOffZoneSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  pickupSound: {fileID: 8300000, guid: 2c5d491002b60d4458dfc3fcc687ac38, type: 3}
+  dropOnZoneSound: {fileID: 8300000, guid: b9a886e7fd39336448b642ca1bc5c6a5, type: 3}
+  dropOffZoneSound: {fileID: 8300000, guid: 3cb7f9c12e736c740b251cac761eb41b, type: 3}
 --- !u!114 &304736503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2713,7 +2863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -268}
+  m_AnchoredPosition: {x: 601, y: -448}
   m_SizeDelta: {x: 455.49, y: 93.265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &381072102
@@ -2792,8 +2942,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -5500825359650641018, guid: 8acb4a95c79bdda4da64ea43229a7327, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5646,9 +5796,9 @@ MonoBehaviour:
   guileResultText: {fileID: 794420258}
   rhetoricResultText: {fileID: 1630509458}
   audioSource: {fileID: 695492983}
-  skillCheckSuccessSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
-  skillCheckFailureSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
-  popupAppearSound: {fileID: 8300000, guid: e30baee400cb7b946a9d66372742fea2, type: 3}
+  skillCheckSuccessSound: {fileID: 8300000, guid: ffb181f1caed508438bf814ed6370a7a, type: 3}
+  skillCheckFailureSound: {fileID: 8300000, guid: ffb181f1caed508438bf814ed6370a7a, type: 3}
+  popupAppearSound: {fileID: 8300000, guid: a0e37ca85a9def049995348e74174a63, type: 3}
   OnPlayerStatChange:
     m_PersistentCalls:
       m_Calls:
@@ -6262,15 +6412,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: OKAY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6326,7 +6476,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: -13.454063}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6489,7 +6639,7 @@ GameObject:
   - component: {fileID: 859252359}
   - component: {fileID: 859252358}
   m_Layer: 5
-  m_Name: TutorialText
+  m_Name: TutorialTextIntro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6511,8 +6661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: 53.526035}
-  m_SizeDelta: {x: 292.4923, y: 186.943}
+  m_AnchoredPosition: {x: 6.609, y: 226}
+  m_SizeDelta: {x: 1182.6924, y: 502.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859252358
 MonoBehaviour:
@@ -6534,10 +6684,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is how you play Sejanus
+  m_text: 'You are Sejanus! The Prefect of the Praetorian Guard in the powerful Roman
+    Empire. Your emperor Tiberius is growing old and feeble as he secludes himself
+    on the Isle of Capri. Now is your chance to usurp the throne and claim the power
+    of empire for yourself! You have several inscrutable agents who will do your
+    bidding, a list of missions that will increase your legitimacy, and now is the
+    time to act! Be wary or watchful, you must maintain secrecy. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6561,20 +6716,20 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.23
-  m_fontSizeBase: 49.23
+  m_fontSize: 31.2
+  m_fontSizeBase: 31.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 57.52
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -6600,7 +6755,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -171.81061, y: 0, z: -167.47913, w: -15.881653}
+  m_margin: {x: -309.8432, y: 10.32019, z: -320.99194, w: 255.02356}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7238,6 +7393,149 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920143599}
   m_CullTransparentMesh: 1
+--- !u!1 &931708480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931708481}
+  - component: {fileID: 931708483}
+  - component: {fileID: 931708482}
+  m_Layer: 5
+  m_Name: TutorialTextSkillInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &931708481
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931708480}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1144841332}
+  - {fileID: 1378894312}
+  - {fileID: 21895390}
+  - {fileID: 61738290}
+  m_Father: {fileID: 2064945582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -17, y: -45}
+  m_SizeDelta: {x: 292.4923, y: 186.943}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &931708482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931708480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "Conflict measures brute strength and the ability to win a physical fight.
+    \r\n\nGuile determines the agent\u2019s ability to remain unnoticed and subterfuge.\r\n\nRhetoric
+    gauges the agent's power of persuasion and public speaking.\r\n"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 31.9
+  m_fontSizeBase: 31.9
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -273.9815, y: -189.52417, z: -511.35754, w: 149.29419}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &931708483
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931708480}
+  m_CullTransparentMesh: 1
 --- !u!1 &937961021
 GameObject:
   m_ObjectHideFlags: 0
@@ -7574,11 +7872,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 8
-      guileTarget: 4
-      rhetoricTarget: 3
-      successText: Success!
-      failText: Failure!
+      conflictTarget: 10
+      guileTarget: 5
+      rhetoricTarget: 5
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -7841,6 +8139,150 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009550833}
   m_CullTransparentMesh: 1
+--- !u!1 &1056247271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056247272}
+  - component: {fileID: 1056247274}
+  - component: {fileID: 1056247273}
+  m_Layer: 5
+  m_Name: TutorialTextHowToPlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1056247272
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056247271}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2064945582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 287, y: -146}
+  m_SizeDelta: {x: 292.4923, y: 186.943}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1056247273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056247271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "How to Play\r\nSelect a mission by clicking on the mission buttons with
+    green highlighted text.\r\nRead the mission description.\r\nDrag and Drop one
+    of three agents onto the drop zone.\r\nEach mission will test all three skills
+    for the agent assigned to the mission. \nYou must succeed 2 out of 3 skill checks
+    to complete a mission. \r\nAgents who fail a mission will be injured for a time,
+    injured agents who fail missions will die. \r\nCompleted Missions reward Legitimacy,
+    failed missions reduce your Secrecy.\r\nIncrease your Legitimacy to win, reduce
+    all your secrecy to lose.\r\n"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 25.5
+  m_fontSizeBase: 25.5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 8
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 1.1
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 8.92
+  m_lineSpacing: 53.2
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: -712.013, y: 0, z: -185.5144, w: -226.97571}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1056247274
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056247271}
+  m_CullTransparentMesh: 1
 --- !u!1 &1064644403
 GameObject:
   m_ObjectHideFlags: 0
@@ -7990,11 +8432,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 8
-      guileTarget: 2
-      rhetoricTarget: 4
-      successText: 'Success! '
-      failText: Failure!
+      conflictTarget: 10
+      guileTarget: 5
+      rhetoricTarget: 5
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -8105,6 +8547,144 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111331863}
+  m_CullTransparentMesh: 1
+--- !u!1 &1144841331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1144841332}
+  - component: {fileID: 1144841334}
+  - component: {fileID: 1144841333}
+  m_Layer: 5
+  m_Name: SkillsIntro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1144841332
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144841331}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 931708481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -750, y: 155}
+  m_SizeDelta: {x: 1186.2024, y: 501.1617}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1144841333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144841331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Your Agents have three skills that will affect your success or failure
+    for missions.
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_sharedMaterial: {fileID: 5502999432684082448, guid: 1f0a3b7508a8f8743a8c01740bef1841, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4293388266
+  m_fontColor: {r: 0.9168632, g: 0.9044293, b: 0.9044293, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 31.2
+  m_fontSizeBase: 31.2
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 2
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 20.1
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 485.34674, y: 159.20087, z: 426.01773, w: 151.85327}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1144841334
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144841331}
   m_CullTransparentMesh: 1
 --- !u!1 &1151622935
 GameObject:
@@ -8776,6 +9356,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174403549}
+  m_CullTransparentMesh: 1
+--- !u!1 &1181864092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181864093}
+  - component: {fileID: 1181864095}
+  - component: {fileID: 1181864094}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1181864093
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181864092}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2064945582}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -736.14014, y: 115.01}
+  m_SizeDelta: {x: 380.38, y: 280.58}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1181864094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181864092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 6120914730915384989, guid: e43ae3f46acafe841b9c524cba739fe0, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1181864095
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181864092}
   m_CullTransparentMesh: 1
 --- !u!1 &1202620270
 GameObject:
@@ -9808,6 +10463,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1373550092}
   m_CullTransparentMesh: 1
+--- !u!1 &1378894311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378894312}
+  - component: {fileID: 1378894314}
+  - component: {fileID: 1378894313}
+  m_Layer: 5
+  m_Name: ConflictIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1378894312
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378894311}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8322684, y: 0.8322684, z: 0.8322684}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 931708481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -478.2, y: 247}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1378894313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378894311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 3048298857577113349, guid: a9be32cfcc993a64a92ed56e686a9549, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1378894314
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378894311}
+  m_CullTransparentMesh: 1
 --- !u!1 &1421700192
 GameObject:
   m_ObjectHideFlags: 0
@@ -10062,11 +10792,11 @@ MonoBehaviour:
   gameOverSecrecyThreshold: 0
   victoryScreen: {fileID: 1164417532}
   deathScreen: {fileID: 437877385}
-  audioSource: {fileID: 0}
-  legitimacyIncreaseSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  legitimacyIncreaseSound: {fileID: 8300000, guid: b7103d55a47d8c341aa6aa0c028e1801, type: 3}
   legitimacyDecreaseSound: {fileID: 0}
   secrecyIncreaseSound: {fileID: 0}
-  secrecyDecreaseSound: {fileID: 0}
+  secrecyDecreaseSound: {fileID: 8300000, guid: 91019e7dd9f28d04eb2193c428454274, type: 3}
 --- !u!4 &1444892125
 Transform:
   m_ObjectHideFlags: 0
@@ -10285,11 +11015,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 2
-      guileTarget: 4
-      rhetoricTarget: 8
-      successText: Success!
-      failText: Failure!
+      conflictTarget: 5
+      guileTarget: 5
+      rhetoricTarget: 10
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -10893,11 +11623,11 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 6
-      rhetoricTarget: 9
-      successText: Success!
-      failText: Failure!
+      conflictTarget: 5
+      guileTarget: 10
+      rhetoricTarget: 5
+      successText: Success! You punch the pleb!
+      failText: Failure! The Pleb punches you!
       successOutcomes:
       - statName: Legitimacy
         amount: 100
@@ -11914,10 +12644,10 @@ MonoBehaviour:
   agentStats: {fileID: 96719553}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 1780106193}
-  audioSource: {fileID: 0}
-  pickupSound: {fileID: 0}
-  dropOnZoneSound: {fileID: 0}
-  dropOffZoneSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  pickupSound: {fileID: 8300000, guid: 2c5d491002b60d4458dfc3fcc687ac38, type: 3}
+  dropOnZoneSound: {fileID: 8300000, guid: b9a886e7fd39336448b642ca1bc5c6a5, type: 3}
+  dropOffZoneSound: {fileID: 8300000, guid: 3cb7f9c12e736c740b251cac761eb41b, type: 3}
 --- !u!114 &1780106193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12712,11 +13442,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 3
+  Conflict: 4
   conflictText: {fileID: 172866045}
-  Rhetoric: 9
+  Rhetoric: 10
   rhetoricText: {fileID: 490281550}
-  Guile: 5
+  Guile: 4
   guileText: {fileID: 1646887086}
   IsAvailable: 0
   isAvailableText: {fileID: 316527008}
@@ -12727,9 +13457,9 @@ MonoBehaviour:
   portraitImage: {fileID: 494180201}
   normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
   injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
-  audioSource: {fileID: 0}
-  injuredSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  injuredSound: {fileID: 8300000, guid: dd8d2a717cdbd4c47bdef7f672b67fa0, type: 3}
+  deathSound: {fileID: 8300000, guid: dd8d2a717cdbd4c47bdef7f672b67fa0, type: 3}
 --- !u!1 &1993962397
 GameObject:
   m_ObjectHideFlags: 0
@@ -13470,13 +14200,16 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 859252357}
+  - {fileID: 1181864093}
+  - {fileID: 931708481}
+  - {fileID: 1056247272}
   - {fileID: 381072101}
   m_Father: {fileID: 626957447}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15, y: 11.121521}
-  m_SizeDelta: {x: -309.74023, y: -278.98694}
+  m_AnchoredPosition: {x: 9.553223, y: 8.174011}
+  m_SizeDelta: {x: -67.3374, y: -58.8199}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064945584
 MonoBehaviour:
@@ -13491,7 +14224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9050708, g: 0.9050708, b: 0.9050708, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13732,10 +14465,10 @@ MonoBehaviour:
   agentStats: {fileID: 2145865731}
   parentCanvas: {fileID: 626957450}
   graphic: {fileID: 2093395206}
-  audioSource: {fileID: 0}
-  pickupSound: {fileID: 0}
-  dropOnZoneSound: {fileID: 0}
-  dropOffZoneSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  pickupSound: {fileID: 8300000, guid: 2c5d491002b60d4458dfc3fcc687ac38, type: 3}
+  dropOnZoneSound: {fileID: 8300000, guid: b9a886e7fd39336448b642ca1bc5c6a5, type: 3}
+  dropOffZoneSound: {fileID: 8300000, guid: 3cb7f9c12e736c740b251cac761eb41b, type: 3}
 --- !u!114 &2093395206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14107,7 +14840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentStats
   AgentName: The Gladiator
   nameText: {fileID: 0}
-  Conflict: 2
+  Conflict: 4
   conflictText: {fileID: 1471654240}
   Rhetoric: 5
   rhetoricText: {fileID: 677025360}
@@ -14122,9 +14855,9 @@ MonoBehaviour:
   portraitImage: {fileID: 1784951983}
   normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
   injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
-  audioSource: {fileID: 0}
-  injuredSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  audioSource: {fileID: 695492983}
+  injuredSound: {fileID: 8300000, guid: 502ea45634368eb4db6ffb4521ec86c1, type: 3}
+  deathSound: {fileID: 8300000, guid: 502ea45634368eb4db6ffb4521ec86c1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

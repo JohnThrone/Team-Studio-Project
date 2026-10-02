@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -64,6 +65,10 @@ public class Mission
     public string missionName;
     [TextArea] public string missionDescription;
     public List<MissionTurn> turns = new List<MissionTurn>();
+
+    [Header("Outcome Follow-Up Text (shown after the Skill Check popup closes, before the panel disappears)")]
+    [TextArea] public string successFollowUpText;
+    [TextArea] public string failureFollowUpText;
 }
 
 [System.Serializable] public class PlayerStatEvent : UnityEvent<string, int> { }
@@ -85,15 +90,30 @@ public class MissionManager : MonoBehaviour
 
     [Header("Skill Check Popup (shown after every turn's three rolls)")]
     [SerializeField] private GameObject skillCheckPopup;
-    [SerializeField] private TextMeshProUGUI conflictResultText;
-    [SerializeField] private TextMeshProUGUI guileResultText;
-    [SerializeField] private TextMeshProUGUI rhetoricResultText;
+    [SerializeField] private SkillCheckResultSlot conflictSlot;
+    [SerializeField] private SkillCheckResultSlot guileSlot;
+    [SerializeField] private SkillCheckResultSlot rhetoricSlot;
+    [Tooltip("Disabled while the reveal sequence plays, re-enabled once all three slots finish. Leave empty to skip this safeguard.")]
+    [SerializeField] private GameObject continueButtonObject;
+    [Tooltip("How long each skill's 2D animation plays before its result image appears.")]
+    [SerializeField] private float resultAnimationDuration = 2f;
+
+    [Header("Mission Outcome Popup (separate from the Mission Panel's own description/event text)")]
+    [SerializeField] private GameObject outcomeFollowUpPopup;
+    [SerializeField] private TextMeshProUGUI outcomeFollowUpText;
+    // Wire this popup's Continue button in the Inspector to CloseOutcomePopup()
     // Wire the popup's Continue button in the Inspector to ContinueAfterSkillCheck()
 
     [Header("Sound Effects")]
     [Tooltip("Add an AudioSource component to this GameObject (or any GameObject) and assign it here.")]
     [SerializeField] private AudioSource audioSource;
+    [Tooltip("Plays once, when the Skill Check Popup first appears.")]
+    [SerializeField] private AudioClip skillCheckPanelAppearSound;
+    [Tooltip("Plays each time a slot's animation starts (so up to 3 times per popup).")]
+    [SerializeField] private AudioClip animationPlaySound;
+    [Tooltip("Plays when a slot reveals its Success image.")]
     [SerializeField] private AudioClip skillCheckSuccessSound;
+    [Tooltip("Plays when a slot reveals its Failure image.")]
     [SerializeField] private AudioClip skillCheckFailureSound;
     [Tooltip("Plays when the Mission Panel's confirmation popup appears.")]
     [SerializeField] private AudioClip popupAppearSound;
@@ -119,6 +139,7 @@ public class MissionManager : MonoBehaviour
     private bool waitingOnSkillCheckPopup = false;
     private bool pendingRollSuccess;
     private List<AgentStats> pendingRollAgents;
+    private Coroutine skillCheckSequenceCoroutine;
 
     // --- MISSION ACTIVATION (called by MissionButton) ---
 
@@ -257,19 +278,19 @@ public class MissionManager : MonoBehaviour
     // Rolls Conflict, Guile, and Rhetoric separately. The turn succeeds if at least 2 of 3 pass.
     private void ResolveThreeSkillCheck(MissionTurn turn, List<AgentStats> agents)
     {
-        (bool conflictSuccess, string conflictBreakdown) = RollSkill(agents, "Conflict", turn.conflictTarget);
-        (bool guileSuccess, string guileBreakdown) = RollSkill(agents, "Guile", turn.guileTarget);
-        (bool rhetoricSuccess, string rhetoricBreakdown) = RollSkill(agents, "Rhetoric", turn.rhetoricTarget);
+        (bool success, string breakdown) conflictResult = RollSkill(agents, "Conflict", turn.conflictTarget);
+        (bool success, string breakdown) guileResult = RollSkill(agents, "Guile", turn.guileTarget);
+        (bool success, string breakdown) rhetoricResult = RollSkill(agents, "Rhetoric", turn.rhetoricTarget);
 
-        int successCount = (conflictSuccess ? 1 : 0) + (guileSuccess ? 1 : 0) + (rhetoricSuccess ? 1 : 0);
+        int successCount = (conflictResult.success ? 1 : 0) + (guileResult.success ? 1 : 0) + (rhetoricResult.success ? 1 : 0);
         bool overallSuccess = successCount >= 2;
 
-        Log($"Skill checks — Conflict: {(conflictSuccess ? "Success" : "Failure")}, Guile: {(guileSuccess ? "Success" : "Failure")}, Rhetoric: {(rhetoricSuccess ? "Success" : "Failure")} ({successCount}/3 passed). Turn result: {(overallSuccess ? "Success" : "Failure")}.");
+        Log($"Skill checks — Conflict: {(conflictResult.success ? "Success" : "Failure")}, Guile: {(guileResult.success ? "Success" : "Failure")}, Rhetoric: {(rhetoricResult.success ? "Success" : "Failure")} ({successCount}/3 passed). Turn result: {(overallSuccess ? "Success" : "Failure")}.");
 
         pendingRollAgents = agents;
         pendingRollSuccess = overallSuccess;
 
-        ShowSkillCheckPopup(overallSuccess, conflictBreakdown, guileBreakdown, rhetoricBreakdown);
+        ShowSkillCheckPopup(overallSuccess, conflictResult, guileResult, rhetoricResult);
     }
 
     // Rolls one skill: modifier = assigned agents' combined stat - target value. Roll = d20 + modifier.
@@ -289,28 +310,55 @@ public class MissionManager : MonoBehaviour
         return (success, breakdown);
     }
 
-    private void ShowSkillCheckPopup(bool success, string conflictBreakdown, string guileBreakdown, string rhetoricBreakdown)
+    private void ShowSkillCheckPopup(bool overallSuccess, (bool success, string breakdown) conflict, (bool success, string breakdown) guile, (bool success, string breakdown) rhetoric)
     {
-        PlaySound(success ? skillCheckSuccessSound : skillCheckFailureSound);
-
         if (skillCheckPopup == null)
         {
             // No popup assigned — just proceed immediately
-            FinishTurnResolution(success, pendingRollAgents, skipOutcomes: false);
+            FinishTurnResolution(overallSuccess, pendingRollAgents, skipOutcomes: false);
             return;
         }
 
         waitingOnSkillCheckPopup = true;
         skillCheckPopup.SetActive(true);
+        PlaySound(skillCheckPanelAppearSound);
 
-        if (conflictResultText != null) conflictResultText.text = conflictBreakdown;
-        if (guileResultText != null) guileResultText.text = guileBreakdown;
-        if (rhetoricResultText != null) rhetoricResultText.text = rhetoricBreakdown;
+        if (continueButtonObject != null) continueButtonObject.SetActive(false); // hidden until the reveal sequence finishes
+
+        skillCheckSequenceCoroutine = StartCoroutine(PlaySkillCheckSequence(conflict, guile, rhetoric));
+    }
+
+    // Plays each slot's 2-second animation, left to right, one after another, then re-enables Continue.
+    private IEnumerator PlaySkillCheckSequence((bool success, string breakdown) conflict, (bool success, string breakdown) guile, (bool success, string breakdown) rhetoric)
+    {
+        yield return PlaySingleSlot(conflictSlot, conflict.success, conflict.breakdown);
+        yield return PlaySingleSlot(guileSlot, guile.success, guile.breakdown);
+        yield return PlaySingleSlot(rhetoricSlot, rhetoric.success, rhetoric.breakdown);
+
+        if (continueButtonObject != null) continueButtonObject.SetActive(true);
+        skillCheckSequenceCoroutine = null;
+    }
+
+    private IEnumerator PlaySingleSlot(SkillCheckResultSlot slot, bool success, string breakdown)
+    {
+        if (slot != null) slot.BeginCheck(success, breakdown);
+        PlaySound(animationPlaySound);
+
+        yield return new WaitForSeconds(resultAnimationDuration);
+
+        if (slot != null) slot.Reveal();
+        PlaySound(success ? skillCheckSuccessSound : skillCheckFailureSound);
     }
 
     // Hook this to the skill check popup's "Continue" button
     public void ContinueAfterSkillCheck()
     {
+        if (skillCheckSequenceCoroutine != null)
+        {
+            StopCoroutine(skillCheckSequenceCoroutine);
+            skillCheckSequenceCoroutine = null;
+        }
+
         if (skillCheckPopup != null) skillCheckPopup.SetActive(false);
         waitingOnSkillCheckPopup = false;
         FinishTurnResolution(pendingRollSuccess, pendingRollAgents, skipOutcomes: false);
@@ -443,7 +491,7 @@ public class MissionManager : MonoBehaviour
         AgentStats.HealAllUnassignedInjuredAgents();
         LockCompletedMissionIfNeeded();
         UnlockRewardMissions();
-        HideMissionPanel();
+        ShowFollowUpText(currentMission.successFollowUpText);
     }
 
     private void FailMission()
@@ -454,6 +502,30 @@ public class MissionManager : MonoBehaviour
         AgentStats.HealAllUnassignedInjuredAgents(); // heal anyone already resting from a PREVIOUS mission first
         InjureAssignedAgentsOnFailure(); // then apply THIS mission's casualties
         AgentStats.UnassignAllAgents();
+        ShowFollowUpText(currentMission.failureFollowUpText);
+    }
+
+    // Shows the mission's own success/failure follow-up text (set on the MissionButton's
+    // Mission data). If left blank for this mission, skips straight to hiding the panel —
+    // otherwise waits for the player to click the popup's own Continue button.
+    private void ShowFollowUpText(string followUpText)
+    {
+        if (string.IsNullOrEmpty(followUpText) || outcomeFollowUpPopup == null)
+        {
+            HideMissionPanel();
+            return;
+        }
+
+        Log(followUpText);
+
+        if (outcomeFollowUpText != null) outcomeFollowUpText.text = followUpText;
+        outcomeFollowUpPopup.SetActive(true);
+    }
+
+    // Hook this to the Outcome Follow-Up Popup's "Continue" button
+    public void CloseOutcomePopup()
+    {
+        if (outcomeFollowUpPopup != null) outcomeFollowUpPopup.SetActive(false);
         HideMissionPanel();
     }
 
@@ -474,7 +546,7 @@ public class MissionManager : MonoBehaviour
     {
         if (currentMissionButton != null && currentMissionButton.lockAfterCompletion)
         {
-            currentMissionButton.isAvailable = false;
+            currentMissionButton.SetAvailable(false);
         }
     }
 
@@ -488,7 +560,7 @@ public class MissionManager : MonoBehaviour
         {
             if (button != null && !button.isAvailable)
             {
-                button.isAvailable = true;
+                button.SetAvailable(true);
                 Log($"New mission unlocked: {button.mission.missionName}");
             }
         }

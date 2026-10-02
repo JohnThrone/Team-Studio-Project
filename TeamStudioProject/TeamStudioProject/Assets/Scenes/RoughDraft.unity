@@ -326,8 +326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78.84808, y: 23.4528}
-  m_SizeDelta: {x: 494.2759, y: 259.8284}
+  m_AnchoredPosition: {x: 78.848114, y: 22.55502}
+  m_SizeDelta: {x: 494.276, y: 261.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &53108890
 MonoBehaviour:
@@ -576,8 +576,8 @@ MonoBehaviour:
   SkillPoints: 0
   skillPointsText: {fileID: 2105271451}
   portraitImage: {fileID: 105943592}
-  normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
-  injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
+  normalPortrait: {fileID: -904977510068252245, guid: e28683eb007c64141af4a0f9798850d5, type: 3}
+  injuredPortrait: {fileID: -7115136877104492506, guid: 25ddcb1167ad48d489ff08c4de0202db, type: 3}
   audioSource: {fileID: 695492983}
   injuredSound: {fileID: 8300000, guid: 8f26a6f1a5075e4458c3de7aa29058f8, type: 3}
   deathSound: {fileID: 0}
@@ -617,8 +617,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.74017, y: 17.548685}
-  m_SizeDelta: {x: 155.6492, y: 213.0667}
+  m_AnchoredPosition: {x: 421.55325, y: 21.6031}
+  m_SizeDelta: {x: 143.4406, y: 204.9578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &105943590
 CanvasGroup:
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -904977510068252245, guid: e28683eb007c64141af4a0f9798850d5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2383,8 +2383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 114.52, y: 139.97}
+  m_AnchoredPosition: {x: 1.8075, y: 0}
+  m_SizeDelta: {x: 110.905, y: 139.97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304736500
 MonoBehaviour:
@@ -2449,7 +2449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -2584467071141594452, guid: 2d1077539f405464eae36a8259100d24, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2533,8 +2533,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291019715
-  m_fontColor: {r: 0.7660377, g: 0.7660377, b: 0.7660377, a: 1}
+    rgba: 4292664540
+  m_fontColor: {r: 0.860849, g: 0.860849, b: 0.860849, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4313,8 +4313,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.74017, y: 17.548685}
-  m_SizeDelta: {x: 155.6492, y: 213.0667}
+  m_AnchoredPosition: {x: 424.0063, y: 18.081}
+  m_SizeDelta: {x: 156.1815, y: 214.1312}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &494180199
 CanvasGroup:
@@ -4363,7 +4363,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -2584467071141594452, guid: 2d1077539f405464eae36a8259100d24, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9374,7 +9374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.25471687, b: 0.25471687, a: 1}
+  m_Color: {r: 0.442217, g: 0.19390732, b: 0.17678252, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12868,8 +12868,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 114.52, y: 139.97}
+  m_AnchoredPosition: {x: 1.3117, y: 0.3547}
+  m_SizeDelta: {x: 87.021, y: 110.7236}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1780106190
 CanvasGroup:
@@ -12922,7 +12922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -904977510068252245, guid: e28683eb007c64141af4a0f9798850d5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12988,8 +12988,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.74017, y: 17.548685}
-  m_SizeDelta: {x: 155.6492, y: 213.0667}
+  m_AnchoredPosition: {x: 424.6935, y: 25.1392}
+  m_SizeDelta: {x: 157.5559, y: 210.108}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1784951981
 CanvasGroup:
@@ -13038,7 +13038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -5944320036390223737, guid: 43fcf2df044db824b8528c2787e763ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13709,8 +13709,8 @@ MonoBehaviour:
   SkillPoints: 0
   skillPointsText: {fileID: 2056304210}
   portraitImage: {fileID: 494180201}
-  normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
-  injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
+  normalPortrait: {fileID: -2584467071141594452, guid: 2d1077539f405464eae36a8259100d24, type: 3}
+  injuredPortrait: {fileID: 1522147054508293179, guid: 7265b844d1886ac458e052e7f0860f25, type: 3}
   audioSource: {fileID: 695492983}
   injuredSound: {fileID: 8300000, guid: dd8d2a717cdbd4c47bdef7f672b67fa0, type: 3}
   deathSound: {fileID: 0}
@@ -14597,8 +14597,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 114.52, y: 139.97}
+  m_AnchoredPosition: {x: 1.3117, y: -1.3204}
+  m_SizeDelta: {x: 87.0216, y: 114.0766}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2093395203
 MonoBehaviour:
@@ -14663,7 +14663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
+  m_Sprite: {fileID: -5944320036390223737, guid: 43fcf2df044db824b8528c2787e763ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15102,8 +15102,8 @@ MonoBehaviour:
   SkillPoints: 0
   skillPointsText: {fileID: 113194505}
   portraitImage: {fileID: 1784951983}
-  normalPortrait: {fileID: 21300000, guid: 3959f316a239b6e4eb967566385ebb9c, type: 3}
-  injuredPortrait: {fileID: -876804536802006225, guid: 5598c96ff3dc912488280f9eb245c1be, type: 3}
+  normalPortrait: {fileID: -5944320036390223737, guid: 43fcf2df044db824b8528c2787e763ce, type: 3}
+  injuredPortrait: {fileID: 7411610067889433271, guid: 621d10b35f25f3c4080531b6bbe7623d, type: 3}
   audioSource: {fileID: 695492983}
   injuredSound: {fileID: 8300000, guid: 502ea45634368eb4db6ffb4521ec86c1, type: 3}
   deathSound: {fileID: 0}

@@ -35,6 +35,13 @@ public class MissionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [Header("Reference")]
     [SerializeField] private MissionManager missionManager;
 
+    private void Start()
+    {
+        // Must start active/checked in the Hierarchy for this to run at all —
+        // this is what hides it immediately if it begins unavailable.
+        gameObject.SetActive(isAvailable);
+    }
+
     // Hook this to the Button component's OnClick() event
     public void OnButtonPressed()
     {
@@ -46,6 +53,15 @@ public class MissionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             Debug.LogWarning("MissionButton: Mission Manager reference is not assigned.");
         }
+    }
+
+    // MissionManager calls this instead of setting isAvailable directly, so the
+    // button's visibility always stays in sync with its availability — same
+    // show/hide approach as the popup panels (SetActive true/false).
+    public void SetAvailable(bool available)
+    {
+        isAvailable = available;
+        gameObject.SetActive(available);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

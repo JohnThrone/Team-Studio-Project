@@ -887,11 +887,13 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 0
-      guileTarget: 10
+      conflictTarget: 4
+      guileTarget: 1
       rhetoricTarget: 6
-      successText: Success!
-      failText: Failure!
+      successText: Our rumor has rooted itself in local conversation, Strabo's chances
+        of being elected are dust in the wind.
+      failText: It seems the populace needs more time with the idea. We'll let the
+        rumor simmer before we stir the pot again.
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -1989,10 +1991,11 @@ MonoBehaviour:
     - turnDescription: 
       requiresCheck: 1
       conflictTarget: 2
-      guileTarget: 8
+      guileTarget: 1
       rhetoricTarget: 4
-      successText: Success!
-      failText: Failure!
+      successText: Cicero found our argument compelling and agreed to fund our cause.
+      failText: Cicero was enraged by our idea, we'll give him some time before we
+        try again.
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -9602,11 +9605,13 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 8
+      conflictTarget: 1
       guileTarget: 4
       rhetoricTarget: 3
-      successText: Success!
-      failText: Failure!
+      successText: Violence is an ugly lever, but we have to pull it occasionally.
+        Our plans are safe in the shadows for now.
+      failText: It seems she's in the wind, we'll have to keep our ears open and
+        be ready to pounce when she re-emerges.
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -10275,11 +10280,15 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 8
+      conflictTarget: 1
       guileTarget: 2
       rhetoricTarget: 4
-      successText: 'Success! '
-      failText: Failure!
+      successText: 'It''s brutal work, but brutal men are glad to do it. Now that
+        the moneylender sees things from our perspective: those families will be
+        in the palm of our hand. '
+      failText: Blasted idiot, our agent was not convining enough. We'll grab the
+        moneylender on another night and see if we can't convince him to see things
+        our way.
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -11505,7 +11514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.5838013, y: 18.634521}
+  m_AnchoredPosition: {x: 5.58374, y: 18.634521}
   m_SizeDelta: {x: -278.91, y: -210.8459}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1219425731
@@ -14161,9 +14170,11 @@ MonoBehaviour:
       requiresCheck: 1
       conflictTarget: 2
       guileTarget: 4
-      rhetoricTarget: 8
-      successText: Success!
-      failText: Failure!
+      rhetoricTarget: 1
+      successText: Our agent remarked that it only took a few minutes before Lucius
+        broke down in tears. Curated silence is a small price to pay for power.
+      failText: Lucius didn't seem to think we were serious and laughed us off. We'll
+        let the rumor seep out into town before we approach him again.
       successOutcomes:
       - statName: Legitimacy
         amount: 12
@@ -15059,11 +15070,14 @@ MonoBehaviour:
     turns:
     - turnDescription: The Pleb puts up a fight!
       requiresCheck: 1
-      conflictTarget: 0
+      conflictTarget: 3
       guileTarget: 6
-      rhetoricTarget: 9
-      successText: Success!
-      failText: Failure!
+      rhetoricTarget: 1
+      successText: We're now the Duumvir, all our plans have lead to this; however,
+        this is just the first step. Soon we'll control it all.
+      failText: The people were not convinced but a cleverly prepared diversion kept
+        the vote from happening in earnest. We'll have another chance to bend the
+        people to our will.
       successOutcomes:
       - statName: Legitimacy
         amount: 100
